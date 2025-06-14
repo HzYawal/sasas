@@ -2,79 +2,80 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>SSUL MAKER - Final Corrected Version</title>
-    <!-- CSS는 이전과 동일합니다. -->
+    <title>SunsakTool (순삭툴)</title>
+    <!-- CSS (SunsakTool 기준으로 클래스명 등 모두 변경) -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@400;700;800&family=Roboto:wght@400;700&family=Gowun+Dodum&family=Gowun+Batang&display=swap');@font-face { font-family: 'GangwonEdu_Modern'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_Modern.woff') format('woff'); }@font-face { font-family: 'GmarketSans'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff'); }:root { --accent-color: #e82c43; --bg-color: #1e1e1e; --panel-color: #2a2a2a; --border-color: #383838; --text-color: #e0e0e0; --subtext-color: #aaa; }* { box-sizing: border-box; }body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; height: 100vh; margin: 0; overflow: hidden; -webkit-font-smoothing: antialiased; }.panel { height: 100vh; display: flex; flex-direction: column; }.sidebar { width: 200px; background-color: var(--panel-color); padding: 20px; border-right: 1px solid var(--border-color); }.main-container { flex-grow: 1; display: flex; flex-direction: column; }.top-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: var(--panel-color); border-bottom: 1px solid var(--border-color); flex-shrink: 0; height: 50px;}.logo { font-family: 'GmarketSans', sans-serif; font-weight: bold; }.main-content { display: flex; flex-grow: 1; overflow: hidden; }.preview-section { flex-basis: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }.editor-section { flex-grow: 1; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); overflow-y: auto; padding: 20px; }.settings-section { flex-basis: 280px; overflow-y: auto; padding: 20px; background-color: var(--panel-color); }button { background-color: var(--accent-color); color: #fff; font-weight: bold; cursor: pointer; border: none; border-radius: 4px; padding: 8px 12px; }.preview-panel { width: 100%; max-width: 380px; aspect-ratio: 9 / 16; background-color: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; }.preview-header { color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 24px; flex-shrink: 0; }.preview-content { padding: 10px; color: black; flex-grow: 1; display: flex; flex-direction: column; background-color: white; overflow: hidden; }.project-info { font-size: 13px; color: #555; margin: 0 0 16px 0; border-bottom: 1px solid #eee; padding-bottom: 16px; }.project-info .title { font-size: 22px; color: black; font-weight: bold; margin-bottom: 5px; }.script-display-area { flex-grow: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }#preview-text { width: 100%; font-size: 24px; color: #000; white-space: pre-wrap; margin-bottom: 8px; flex-shrink: 0; }#preview-image-container { width: 100%; display: flex; justify-content: center; align-items: flex-start; }#preview-image { max-width: 100%; max-height: 100%; object-fit: contain; }.timeline-controls { width: 100%; max-width: 380px; display: flex; align-items: center; gap: 10px; margin-top: 15px;}.play-preview-btn { background: none; font-size: 24px; padding: 0;}#timeline-slider { flex-grow: 1; }.editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }.editor-header h3 { margin: 0; }.editor-header .button-group { display: flex; gap: 8px; }.script-card { background-color: var(--panel-color); border: 2px solid transparent; padding: 15px; margin-top: 15px; border-radius: 4px; cursor: pointer; position: relative; }.script-card.active { border-color: var(--accent-color); }.script-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .card-drag-handle { cursor: grab; }
-        .card-drag-handle:active { cursor: grabbing; }
-        .card-number { font-weight: bold; font-size: 18px; }textarea { width:100%; min-height:60px; background-color: #333; border: 1px solid var(--border-color); color: var(--text-color); border-radius: 4px; padding: 8px; }.script-card-footer { margin-top: 10px; display: flex; align-items: center; gap: 10px; font-size: 13px; flex-wrap: wrap; }input[type="file"] { display: none; }.action-btn { background: none; border:none; color: var(--subtext-color); text-decoration: underline; cursor: pointer; padding: 0; font-size: 13px; }.preview-audio-btn { font-size: 18px; background: none; padding: 0 5px; cursor: pointer; border: none; color: var(--text-color); }.preview-audio-btn:disabled { color: #555; cursor: not-allowed; }.card-loading-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); color: white; display: flex; justify-content: center; align-items: center; z-index: 10; border-radius: 4px; font-weight: bold; }.accordion-header { padding: 12px 0; cursor: pointer; border-bottom: 1px solid var(--border-color); font-weight: bold; }.accordion-content { padding: 15px 0; display: none; }.accordion-item.active .accordion-content { display: block; }.control-group { margin-bottom: 15px; }input, select { width: 100%; padding: 8px; background-color: #1e1e1e; border: 1px solid var(--border-color); color: var(--text-color); }.flex-group { display: flex; gap: 10px; }
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; }
-        .modal-overlay.visible { display: flex; }
-        .modal-dialog { background-color: var(--panel-color); padding: 24px; border-radius: 8px; width: 90%; max-width: 600px; border: 1px solid var(--border-color); }
-        .modal-dialog h2 { margin-top: 0; font-size: 18px; }
-        .modal-dialog p { color: var(--subtext-color); font-size: 14px; margin-bottom: 16px; }
-        .modal-dialog textarea { height: 250px; font-size: 14px; margin-bottom: 16px; }
-        .modal-dialog .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;}
-        .modal-dialog .modal-actions button.cancel { background-color: #555; }
-        #waveform { width: 100%; height: 128px; background-color: #1e1e1e; }
-        #waveform-loading { text-align: center; padding: 40px; color: var(--subtext-color); }
-        .waveform-controls { margin-top: 15px; display: flex; gap: 10px; align-items: center;}
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@400;700;800&family=Roboto:wght@400;700&family=Gowun+Dodum&family=Gowun+Batang&display=swap');@font-face { font-family: 'GangwonEdu_Modern'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_Modern.woff') format('woff'); }@font-face { font-family: 'GmarketSans'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff'); }:root { --st-accent-color: #e82c43; --st-bg-color: #1e1e1e; --st-panel-color: #2a2a2a; --st-border-color: #383838; --st-text-color: #e0e0e0; --st-subtext-color: #aaa; }* { box-sizing: border-box; }body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--st-bg-color); color: var(--st-text-color); display: flex; height: 100vh; margin: 0; overflow: hidden; -webkit-font-smoothing: antialiased; }.st-panel { height: 100vh; display: flex; flex-direction: column; }.st-sidebar { width: 200px; background-color: var(--st-panel-color); padding: 20px; border-right: 1px solid var(--st-border-color); }.st-main-container { flex-grow: 1; display: flex; flex-direction: column; }.st-top-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: var(--st-panel-color); border-bottom: 1px solid var(--st-border-color); flex-shrink: 0; height: 50px;}.st-logo { font-family: 'GmarketSans', sans-serif; font-weight: bold; }.st-main-content { display: flex; flex-grow: 1; overflow: hidden; }.st-preview-area { flex-basis: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }.st-editor-area { flex-grow: 1; border-left: 1px solid var(--st-border-color); border-right: 1px solid var(--st-border-color); overflow-y: auto; padding: 20px; }.st-settings-area { flex-basis: 280px; overflow-y: auto; padding: 20px; background-color: var(--st-panel-color); }button { background-color: var(--st-accent-color); color: #fff; font-weight: bold; cursor: pointer; border: none; border-radius: 4px; padding: 8px 12px; }.st-preview-panel { width: 100%; max-width: 380px; aspect-ratio: 9 / 16; background-color: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; }.st-preview-header { color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 24px; flex-shrink: 0; }.st-preview-content { padding: 10px; color: black; flex-grow: 1; display: flex; flex-direction: column; background-color: white; overflow: hidden; }.st-project-info { font-size: 13px; color: #555; margin: 0 0 16px 0; border-bottom: 1px solid #eee; padding-bottom: 16px; }.st-project-info .title { font-size: 22px; color: black; font-weight: bold; margin-bottom: 5px; }.st-script-display { flex-grow: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }#st-preview-text { width: 100%; font-size: 24px; color: #000; white-space: pre-wrap; margin-bottom: 8px; flex-shrink: 0; }#st-preview-image-container { width: 100%; display: flex; justify-content: center; align-items: flex-start; }#st-preview-image { max-width: 100%; max-height: 100%; object-fit: contain; }.st-timeline-controls { width: 100%; max-width: 380px; display: flex; align-items: center; gap: 10px; margin-top: 15px;}.st-play-all-btn { background: none; font-size: 24px; padding: 0;}#st-timeline-slider { flex-grow: 1; }.st-editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }.st-editor-header h3 { margin: 0; }.st-editor-header .button-group { display: flex; gap: 8px; }.st-card { background-color: var(--st-panel-color); border: 2px solid transparent; padding: 15px; margin-top: 15px; border-radius: 4px; cursor: pointer; position: relative; }.st-card.active { border-color: var(--st-accent-color); }.st-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .st-card-drag-handle { cursor: grab; }
+        .st-card-drag-handle:active { cursor: grabbing; }
+        .st-card-number { font-weight: bold; font-size: 18px; }textarea { width:100%; min-height:60px; background-color: #333; border: 1px solid var(--st-border-color); color: var(--st-text-color); border-radius: 4px; padding: 8px; }.st-card-footer { margin-top: 10px; display: flex; align-items: center; gap: 10px; font-size: 13px; flex-wrap: wrap; }input[type="file"] { display: none; }.st-action-btn { background: none; border:none; color: var(--st-subtext-color); text-decoration: underline; cursor: pointer; padding: 0; font-size: 13px; }.st-play-clip-btn { font-size: 18px; background: none; padding: 0 5px; cursor: pointer; border: none; color: var(--st-text-color); }.st-play-clip-btn:disabled { color: #555; cursor: not-allowed; }.st-card-loading { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); color: white; display: flex; justify-content: center; align-items: center; z-index: 10; border-radius: 4px; font-weight: bold; }.st-accordion-header { padding: 12px 0; cursor: pointer; border-bottom: 1px solid var(--st-border-color); font-weight: bold; }.st-accordion-content { padding: 15px 0; display: none; }.st-accordion-item.active .st-accordion-content { display: block; }.st-control-group { margin-bottom: 15px; }input, select { width: 100%; padding: 8px; background-color: #1e1e1e; border: 1px solid var(--st-border-color); color: var(--st-text-color); }.st-flex-group { display: flex; gap: 10px; }
+        .st-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .st-modal-overlay.visible { display: flex; }
+        .st-modal-dialog { background-color: var(--st-panel-color); padding: 24px; border-radius: 8px; width: 90%; max-width: 600px; border: 1px solid var(--st-border-color); }
+        .st-modal-dialog h2 { margin-top: 0; font-size: 18px; }
+        .st-modal-dialog p { color: var(--st-subtext-color); font-size: 14px; margin-bottom: 16px; }
+        .st-modal-dialog textarea { height: 250px; font-size: 14px; margin-bottom: 16px; }
+        .st-modal-dialog .st-modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;}
+        .st-modal-dialog .st-modal-actions button.cancel { background-color: #555; }
+        #st-waveform-container { width: 100%; height: 128px; background-color: #1e1e1e; }
+        #st-waveform-loading { text-align: center; padding: 40px; color: var(--st-subtext-color); }
+        .st-waveform-controls { margin-top: 15px; display: flex; gap: 10px; align-items: center;}
     </style>
 </head>
 <body>
-    <div class="panel sidebar"> <button id="add-project-btn">+ 새 프로젝트</button> </div>
-    <div class="main-container">
-        <div class="top-header"> <div class="logo">SSUL MAKER</div> <div id="header-title-display"></div> </div>
-        <div class="main-content">
-            <div class="panel preview-section">
-                <div class="preview-panel" id="preview-panel"></div>
-                <div class="timeline-controls"> <button id="play-preview-btn">▶</button> <input type="range" id="timeline-slider" value="0" step="0.1"> </div>
+    <div class="st-panel st-sidebar"> <button id="st-btn-add-project">+ 새 프로젝트</button> </div>
+    <div class="st-main-container">
+        <!-- ✨ FIX: 이 부분에서 오른쪽 텍스트 표시용 div 제거 -->
+        <div class="st-top-header"> <div class="st-logo">SunsakTool</div> </div>
+        <div class="st-main-content">
+            <div class="st-panel st-preview-area">
+                <div class="st-preview-panel" id="st-preview-panel"></div>
+                <div class="st-timeline-controls"> <button class="st-play-all-btn" id="st-btn-play-all">▶</button> <input type="range" id="st-timeline-slider" value="0" step="0.1"> </div>
             </div>
-            <div class="panel editor-section">
-                <div class="editor-header">
+            <div class="st-panel st-editor-area">
+                <div class="st-editor-header">
                     <h3>스크립트 & 타임라인</h3>
                     <div class="button-group">
-                        <button id="add-gpts-btn" style="background-color: #3e3e3e;">+ GPTS 스크립트 추가</button>
-                        <button id="add-script-btn-main">+ 스크립트 추가</button>
+                        <button id="st-btn-add-gpts" style="background-color: #3e3e3e;">+ GPTS 스크립트 추가</button>
+                        <button id="st-btn-add-card">+ 스크립트 추가</button>
                     </div>
                 </div>
-                <div id="script-container"></div>
+                <div id="st-card-container"></div>
             </div>
-            <div class="panel settings-section"> <div id="control-panel"></div> </div>
+            <div class="st-panel st-settings-area" id="st-settings-panel"></div>
         </div>
     </div>
-    <div id="gpts-modal" class="modal-overlay">
-        <div class="modal-dialog">
+    <div id="st-modal-gpts" class="st-modal-overlay">
+        <div class="st-modal-dialog">
             <h2>GPTs 스크립트 추가</h2>
             <p>GPTs에서 생성된 스크립트를 입력하세요. 빈 줄로 구분하여 여러 스크립트를 한번에 추가할 수 있습니다.</p>
-            <textarea id="gpts-textarea" placeholder="여기에 GPTs 스크립트를 입력하세요..."></textarea>
-            <div class="modal-actions">
-                <button id="gpts-cancel-btn" class="cancel">취소</button>
-                <button id="gpts-confirm-btn">확인</button>
+            <textarea id="st-gpts-textarea" placeholder="여기에 GPTs 스크립트를 입력하세요..."></textarea>
+            <div class="st-modal-actions">
+                <button id="st-btn-gpts-cancel" class="cancel">취소</button>
+                <button id="st-btn-gpts-confirm">확인</button>
             </div>
         </div>
     </div>
-    <div id="bgm-editor-modal" class="modal-overlay">
-        <div class="modal-dialog">
+    <div id="st-modal-bgm" class="st-modal-overlay">
+        <div class="st-modal-dialog">
             <h2>BGM 구간 설정</h2>
             <p>오디오 파형 위에서 원하는 구간을 드래그하여 선택하세요.</p>
-            <div id="waveform">
-                <div id="waveform-loading">BGM 로딩 중...</div>
+            <div id="st-waveform-container">
+                <div id="st-waveform-loading">BGM 로딩 중...</div>
             </div>
-            <div class="waveform-controls">
-                <button id="bgm-play-pause-btn">재생/일시정지</button>
-                <button id="bgm-play-region-btn">선택 구간 미리듣기</button>
-                <span id="bgm-time-display">0.00s - 0.00s</span>
+            <div class="st-waveform-controls">
+                <button id="st-btn-bgm-play-pause">재생/일시정지</button>
+                <button id="st-btn-bgm-play-region">선택 구간 미리듣기</button>
+                <span id="st-bgm-time-display">0.00s - 0.00s</span>
             </div>
-            <div class="modal-actions">
-                <button id="bgm-editor-cancel-btn" class="cancel">취소</button>
-                <button id="bgm-editor-confirm-btn">확인</button>
+            <div class="st-modal-actions">
+                <button id="st-btn-bgm-cancel" class="cancel">취소</button>
+                <button id="st-btn-bgm-confirm">확인</button>
             </div>
         </div>
     </div>
-    <audio id="tts-player" style="display:none;"></audio>
-    <audio id="bgm-player" style="display:none;" loop></audio>
+    <audio id="st-tts-player" style="display:none;"></audio>
+    <audio id="st-bgm-player" style="display:none;" loop></audio>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.4.0/wavesurfer.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.4.0/plugin/wavesurfer.regions.min.js"></script>
@@ -106,13 +107,13 @@
         let playbackCurrentIndex = 0;
         let selectedCardId = null;
 
-        const scriptContainer = document.getElementById('script-container');
-        const playBtn = document.getElementById('play-preview-btn');
-        const timelineSlider = document.getElementById('timeline-slider');
-        const ttsPlayer = document.getElementById('tts-player');
-        const bgmPlayer = document.getElementById('bgm-player');
-        const controlPanel = document.getElementById('control-panel');
-        const addScriptBtnMain = document.getElementById('add-script-btn-main');
+        const cardContainer = document.getElementById('st-card-container');
+        const playAllBtn = document.getElementById('st-btn-play-all');
+        const timelineSlider = document.getElementById('st-timeline-slider');
+        const ttsPlayer = document.getElementById('st-tts-player');
+        const bgmPlayer = document.getElementById('st-bgm-player');
+        const settingsPanel = document.getElementById('st-settings-panel');
+        const addCardBtn = document.getElementById('st-btn-add-card');
 
         let wavesurfer = null;
         let activeRegion = null;
@@ -125,13 +126,8 @@
             }
             
             wavesurfer = WaveSurfer.create({
-                container: '#waveform', waveColor: '#ddd', progressColor: '#e82c43', cursorColor: '#fff', barWidth: 2, barRadius: 3,
-                plugins: [ 
-                    WaveSurfer.regions.create({ 
-                        dragSelection: true,
-                        color: 'rgba(232, 44, 67, 0.2)' 
-                    }) 
-                ]
+                container: '#st-waveform-container', waveColor: '#ddd', progressColor: '#e82c43', cursorColor: '#fff', barWidth: 2, barRadius: 3,
+                plugins: [ WaveSurfer.regions.create({ dragSelection: true, color: 'rgba(232, 44, 67, 0.2)' }) ]
             });
 
             wavesurfer.on('error', (err) => {
@@ -141,36 +137,31 @@
             });
 
             wavesurfer.on('ready', () => {
-                document.getElementById('waveform-loading').style.display = 'none';
+                document.getElementById('st-waveform-loading').style.display = 'none';
                 wavesurfer.clearRegions();
                 activeRegion = null;
-                
                 const totalDuration = wavesurfer.getDuration();
                 const fixedRegionDuration = 60;
-
                 if (totalDuration > fixedRegionDuration) {
                     wavesurfer.plugins[0].params.dragSelection = false;
                     activeRegion = wavesurfer.addRegion({
-                        start: 0,
-                        end: fixedRegionDuration,
-                        color: 'rgba(232, 44, 67, 0.3)',
-                        resizable: false,
+                        start: 0, end: fixedRegionDuration, color: 'rgba(232, 44, 67, 0.3)', resizable: false,
                     });
-                     document.getElementById('bgm-time-display').textContent = `0.00s - ${fixedRegionDuration.toFixed(2)}s`;
+                     document.getElementById('st-bgm-time-display').textContent = `0.00s - ${fixedRegionDuration.toFixed(2)}s`;
                 } else {
                     wavesurfer.plugins[0].params.dragSelection = true;
-                    document.getElementById('bgm-time-display').textContent = `0.00s - ${totalDuration.toFixed(2)}s`;
+                    document.getElementById('st-bgm-time-display').textContent = `0.00s - ${totalDuration.toFixed(2)}s`;
                 }
             });
 
             wavesurfer.on('region-update-end', (region) => {
                 activeRegion = region;
-                document.getElementById('bgm-time-display').textContent = `${region.start.toFixed(2)}s - ${region.end.toFixed(2)}s`;
+                document.getElementById('st-bgm-time-display').textContent = `${region.start.toFixed(2)}s - ${region.end.toFixed(2)}s`;
             });
 
-            document.getElementById('bgm-play-pause-btn').addEventListener('click', () => wavesurfer.playPause());
-            document.getElementById('bgm-play-region-btn').addEventListener('click', () => { if (activeRegion) activeRegion.play(); });
-            document.getElementById('bgm-editor-confirm-btn').addEventListener('click', () => {
+            document.getElementById('st-btn-bgm-play-pause').addEventListener('click', () => wavesurfer.playPause());
+            document.getElementById('st-btn-bgm-play-region').addEventListener('click', () => { if (activeRegion) activeRegion.play(); });
+            document.getElementById('st-btn-bgm-confirm').addEventListener('click', () => {
                 if (bgmEditorContext.callback) {
                     const startTime = activeRegion ? activeRegion.start : 0;
                     const endTime = activeRegion ? activeRegion.end : wavesurfer.getDuration();
@@ -178,23 +169,19 @@
                 }
                 closeBgmEditor();
             });
-            document.getElementById('bgm-editor-cancel-btn').addEventListener('click', closeBgmEditor);
+            document.getElementById('st-btn-bgm-cancel').addEventListener('click', closeBgmEditor);
         }
 
         function openBgmEditor(url, currentBgm, callback) {
             bgmEditorContext = { callback, currentBgm };
-            document.getElementById('bgm-editor-modal').classList.add('visible');
-            document.getElementById('waveform-loading').style.display = 'block';
-            
+            document.getElementById('st-modal-bgm').classList.add('visible');
+            document.getElementById('st-waveform-loading').style.display = 'block';
             if (!wavesurfer) initializeBgmEditor();
-            
-            if (wavesurfer) {
-                wavesurfer.load(url);
-            }
+            if (wavesurfer) wavesurfer.load(url);
         }
 
         function closeBgmEditor() {
-            document.getElementById('bgm-editor-modal').classList.remove('visible');
+            document.getElementById('st-modal-bgm').classList.remove('visible');
             if (wavesurfer) wavesurfer.stop();
         }
 
@@ -252,42 +239,36 @@
         function renderControls() {
             const fontOptions = ['GangwonEdu_Modern', 'Noto Sans KR', 'Roboto', 'Nanum Gothic', 'Nanum Myeongjo', 'Gowun Dodum', 'Gowun Batang'].map(f => `<option value="'${f}', sans-serif" style="font-family:'${f}';">${f}</option>`).join('');
             const bgmOptions = BGM_LIST.map(bgm => `<option value="${bgm.url}">${bgm.name}</option>`).join('');
-            controlPanel.innerHTML = `
-                <div class="accordion-item active"><div class="accordion-header">헤더 스타일</div><div class="accordion-content"><div class="control-group"><label>헤더 텍스트</label><input type="text" id="header-text-input" value="썰쑈"></div><div class="flex-group"><div><label>배경 색상</label><input type="color" id="header-bg-color" value="#e82c43"></div><div><label>글자 색상</label><input type="color" id="header-font-color" value="#FFFFFF"></div></div><div class="control-group"><label>폰트</label><select id="header-font-select">${fontOptions}</select></div></div></div>
-                <div class="accordion-item"><div class="accordion-header">스크립트 스타일</div><div class="accordion-content"><div class="control-group"><label>텍스트 색상</label><input type="color" id="script-color-input" value="#000000"></div><div class="flex-group"><div><label>폰트</label><select id="script-font-select-main">${fontOptions}</select></div><div><label>크기</label><input type="number" id="script-fontsize-input" value="24"></div></div><div class="flex-group"><div><label>X</label><input type="number" id="script-x-pos" value="0"></div><div><label>Y</label><input type="number" id="script-y-pos" value="0"></div></div></div></div>
-                <div class="accordion-item"><div class="accordion-header">프로젝트 정보</div><div class="accordion-content"><div class="control-group"><label>제목</label><input type="text" id="project-title-input" value="그래 넌 할 수 있어"></div><div class="control-group"><label>작성자</label><input type="text" id="project-author-input" value="ㅇㅇ"></div><div class="control-group"><label>조회수</label><input type="number" id="project-views-input" value="0"></div><div class="flex-group"><div><label>제목 색상</label><input type="color" id="project-title-color" value="#000000"></div><div><label>작성자/조회수 색상</label><input type="color" id="project-meta-color" value="#555555"></div></div></div></div>
-                <div class="accordion-item"><div class="accordion-header">배경음악 설정</div><div class="accordion-content"><div class="control-group"><label>전체 배경음악 선택</label><select id="global-bgm-select">${bgmOptions}</select></div><div class="control-group"><label>BGM 볼륨</label><input type="range" id="global-bgm-volume" min="0" max="1" step="0.01" value="${globalBGM.volume}"></div></div></div>`;
-            ['header-text-input', 'header-bg-color', 'header-font-color', 'header-font-select', 'project-title-input', 'project-author-input', 'project-views-input', 'project-title-color', 'project-meta-color'].forEach(id => document.getElementById(id).addEventListener('input', updatePreviewDisplay));
-            ['script-color-input', 'script-font-select-main', 'script-fontsize-input', 'script-x-pos', 'script-y-pos'].forEach(id => document.getElementById(id).addEventListener('input', applyScriptStylesToSelectedCard));
-            document.querySelectorAll('.accordion-header').forEach(h => h.addEventListener('click', () => h.parentElement.classList.toggle('active')));
-            document.getElementById('header-title-display').textContent = document.getElementById('project-title-input').value;
-            document.getElementById('project-title-input').addEventListener('input', (e) => { document.getElementById('header-title-display').textContent = e.target.value; });
-            document.getElementById('global-bgm-select').addEventListener('change', (e) => {
-                const url = e.target.value;
-                if (url) { openBgmEditor(url, globalBGM, ({ startTime, endTime }) => { globalBGM = { ...globalBGM, url, startTime, endTime }; if (isPlaying) playBGM(); });
-                } else { globalBGM.url = null; if (isPlaying) bgmPlayer.pause(); }
+            settingsPanel.innerHTML = `
+                <div class="st-accordion-item active"><div class="st-accordion-header">헤더 스타일</div><div class="st-accordion-content"><div class="st-control-group"><label>헤더 텍스트</label><input type="text" id="st-setting-header-text" value="썰쑈"></div><div class="st-flex-group"><div><label>배경 색상</label><input type="color" id="st-setting-header-bg" value="#e82c43"></div><div><label>글자 색상</label><input type="color" id="st-setting-header-color" value="#FFFFFF"></div></div><div class="st-control-group"><label>폰트</label><select id="st-setting-header-font">${fontOptions}</select></div></div></div>
+                <div class="st-accordion-item"><div class="st-accordion-header">스크립트 스타일</div><div class="st-accordion-content"><div class="st-control-group"><label>텍스트 색상</label><input type="color" id="st-setting-script-color" value="#000000"></div><div class="st-flex-group"><div><label>폰트</label><select id="st-setting-script-font">${fontOptions}</select></div><div><label>크기</label><input type="number" id="st-setting-script-size" value="24"></div></div><div class="st-flex-group"><div><label>X</label><input type="number" id="st-setting-script-x" value="0"></div><div><label>Y</label><input type="number" id="st-setting-script-y" value="0"></div></div></div></div>
+                <div class="st-accordion-item"><div class="st-accordion-header">프로젝트 정보</div><div class="st-accordion-content"><div class="st-control-group"><label>제목</label><input type="text" id="st-setting-project-title" value="그래 넌 할 수 있어"></div><div class="st-control-group"><label>작성자</label><input type="text" id="st-setting-project-author" value="ㅇㅇ"></div><div class="st-control-group"><label>조회수</label><input type="number" id="st-setting-project-views" value="0"></div><div class="st-flex-group"><div><label>제목 색상</label><input type="color" id="st-setting-title-color" value="#000000"></div><div><label>작성자/조회수 색상</label><input type="color" id="st-setting-meta-color" value="#555555"></div></div></div></div>
+                <div class="st-accordion-item"><div class="st-accordion-header">배경음악 설정</div><div class="st-accordion-content"><div class="st-control-group"><label>전체 배경음악 선택</label><select id="st-setting-global-bgm">${bgmOptions}</select></div><div class="st-control-group"><label>BGM 볼륨</label><input type="range" id="st-setting-global-bgm-volume" min="0" max="1" step="0.01" value="${globalBGM.volume}"></div></div></div>`;
+
+            document.querySelectorAll('#st-settings-panel input, #st-settings-panel select').forEach(el => {
+                if (el.id.includes('script')) {
+                    el.addEventListener('input', applyScriptStylesToSelectedCard);
+                } else {
+                    el.addEventListener('input', updatePreviewDisplay);
+                }
             });
-            document.getElementById('global-bgm-volume').addEventListener('input', (e) => { globalBGM.volume = parseFloat(e.target.value); bgmPlayer.volume = globalBGM.volume; });
+
+            document.querySelectorAll('.st-accordion-header').forEach(h => h.addEventListener('click', () => h.parentElement.classList.toggle('active')));
         }
 
         function addScriptCard(text = '') {
             const cardId = `card-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
-            const cardData = { id: cardId, text, duration: 0.5, imageUrl: null, style: {}, bgm: { url: null }, ttsReady: false };
+            const cardData = { id: cardId, text, duration: 0.5, imageUrl: null, style: {}, audioUrl: null, ttsReady: false };
             scriptCards.push(cardData);
             const cardEl = document.createElement('div');
-            cardEl.className = 'script-card';
+            cardEl.className = 'st-card';
             cardEl.dataset.id = cardId;
-            cardEl.innerHTML = `<div class="script-card-header card-drag-handle"><span class="card-number"></span><button class="delete-btn">🗑️</button></div><textarea placeholder="스크립트를 입력하세요...">${text}</textarea><div class="script-card-footer"><button class="preview-audio-btn" title="미리듣기" disabled>▶️</button><span class="duration-label">타임라인 (---초)</span><label class="action-btn" for="${cardId}-file">이미지</label><input type="file" id="${cardId}-file" accept="image/*"></div>`;
-            scriptContainer.appendChild(cardEl);
+            cardEl.innerHTML = `<div class="st-card-header st-card-drag-handle"><span class="st-card-number"></span><button class="st-btn-delete-card">🗑️</button></div><textarea placeholder="스크립트를 입력하세요...">${text}</textarea><div class="st-card-footer"><button class="st-play-clip-btn" title="미리듣기" disabled>▶️</button><span class="st-duration-label">타임라인 (---초)</span><label class="st-action-btn" for="${cardId}-file">이미지</label><input type="file" id="${cardId}-file" accept="image/*"></div>`;
+            cardContainer.appendChild(cardEl);
             
-            // ✨ FIX: 미리듣기 버튼에 클릭 이벤트 추가
-            cardEl.querySelector('.preview-audio-btn').addEventListener('click', (e) => {
-                e.stopPropagation(); // 카드 전체가 선택되는 현상 방지
-
-                if (isPlaying) { // 전체 재생 중이면 일단 정지
-                    stopPlayback();
-                }
-
+            cardEl.querySelector('.st-play-clip-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (isPlaying) stopPlayback();
                 if (cardData.ttsReady && cardData.audioUrl) {
                     ttsPlayer.src = cardData.audioUrl;
                     ttsPlayer.play();
@@ -295,55 +276,101 @@
             });
 
             const debouncedFetchAndUpdate = debounce(async (newText, id) => {
-                const cardDataToUpdate = scriptCards.find(c => c.id === id);
+                const cardToUpdate = scriptCards.find(c => c.id === id);
                 const ttsData = await fetchTTS(newText, id);
-                if (ttsData && cardDataToUpdate) {
-                    cardDataToUpdate.duration = ttsData.duration;
-                    cardDataToUpdate.audioUrl = ttsData.audioUrl;
-                    cardDataToUpdate.ttsReady = true;
-                    const currentCardEl = document.querySelector(`.script-card[data-id="${id}"]`);
+                if (ttsData && cardToUpdate) {
+                    cardToUpdate.duration = ttsData.duration;
+                    cardToUpdate.audioUrl = ttsData.audioUrl;
+                    cardToUpdate.ttsReady = true;
+                    const currentCardEl = document.querySelector(`.st-card[data-id="${id}"]`);
                     if(currentCardEl) {
-                        currentCardEl.querySelector('.duration-label').textContent = `타임라인 (${ttsData.duration.toFixed(2)}초)`;
-                        currentCardEl.querySelector('.preview-audio-btn').disabled = false;
+                        currentCardEl.querySelector('.st-duration-label').textContent = `타임라인 (${ttsData.duration.toFixed(2)}초)`;
+                        currentCardEl.querySelector('.st-play-clip-btn').disabled = false;
                     }
                     updateTotalDuration();
                 }
             }, 800);
 
             cardEl.querySelector('textarea').addEventListener('input', (e) => { cardData.text = e.target.value; debouncedFetchAndUpdate(cardData.text, cardId); });
-            cardEl.querySelector('.delete-btn').addEventListener('click', (e) => { e.stopPropagation(); deleteCard(cardId); });
+            cardEl.querySelector('.st-btn-delete-card').addEventListener('click', (e) => { e.stopPropagation(); deleteCard(cardId); });
             cardEl.addEventListener('click', () => selectCard(cardId));
             if (text) debouncedFetchAndUpdate(text, cardId);
             if (!selectedCardId) selectCard(cardId);
             updateCardNumbers();
         }
         
-        function deleteCard(cardId) { const cardIndex = scriptCards.findIndex(c => c.id === cardId); if(cardIndex === -1) return; scriptCards.splice(cardIndex, 1); document.querySelector(`.script-card[data-id="${cardId}"]`).remove(); if (selectedCardId === cardId) selectedCardId = null; if(scriptCards.length > 0) { const nextIndex = Math.max(0, cardIndex - 1); if (scriptCards[nextIndex]) selectCard(scriptCards[nextIndex].id); } else { updatePreviewDisplay(); } updateTotalDuration(); updateCardNumbers(); }
-        function updateCardNumbers() { document.querySelectorAll('.script-card').forEach((card, index) => { card.querySelector('.card-number').textContent = index + 1; }); }
+        function deleteCard(cardId) {
+            const cardIndex = scriptCards.findIndex(c => c.id === cardId);
+            if(cardIndex === -1) return;
+            scriptCards.splice(cardIndex, 1);
+            document.querySelector(`.st-card[data-id="${cardId}"]`).remove();
+            if (selectedCardId === cardId) {
+                selectedCardId = null;
+                if(scriptCards.length > 0) {
+                    const nextIndex = Math.max(0, cardIndex - 1);
+                    if (scriptCards[nextIndex]) selectCard(scriptCards[nextIndex].id);
+                } else {
+                    updatePreviewDisplay();
+                }
+            }
+            updateTotalDuration();
+            updateCardNumbers();
+        }
+
+        function updateCardNumbers() { document.querySelectorAll('.st-card').forEach((card, index) => { card.querySelector('.st-card-number').textContent = index + 1; }); }
         function updateTotalDuration() { const total = scriptCards.reduce((sum, card) => sum + (card.duration || 0.5), 0); timelineSlider.max = total; }
-        function showLoadingOnCard(cardId, show, message = '음성 생성 중...') { const cardEl = document.querySelector(`.script-card[data-id="${cardId}"]`); if (!cardEl) return; let overlay = cardEl.querySelector('.card-loading-overlay'); if (show) { if (!overlay) { overlay = document.createElement('div'); overlay.className = 'card-loading-overlay'; cardEl.appendChild(overlay); } overlay.textContent = message; } else { if (overlay) overlay.remove(); } }
-        function selectCard(cardId, fromPlayback = false) { if (isPlaying && !fromPlayback) stopPlayback(); selectedCardId = cardId; document.querySelectorAll('.script-card').forEach(c => c.classList.remove('active')); const cardEl = document.querySelector(`.script-card[data-id="${cardId}"]`); if (cardEl) { cardEl.classList.add('active'); cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); updateScriptStyleControls(); updatePreviewDisplay(); } else { updatePreviewDisplay(); } }
+        function showLoadingOnCard(cardId, show, message = '음성 생성 중...') {
+            const cardEl = document.querySelector(`.st-card[data-id="${cardId}"]`);
+            if (!cardEl) return;
+            let overlay = cardEl.querySelector('.st-card-loading');
+            if (show) {
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.className = 'st-card-loading';
+                    cardEl.appendChild(overlay);
+                }
+                overlay.textContent = message;
+            } else {
+                if (overlay) overlay.remove();
+            }
+        }
+
+        function selectCard(cardId, fromPlayback = false) {
+            if (isPlaying && !fromPlayback) stopPlayback();
+            selectedCardId = cardId;
+            document.querySelectorAll('.st-card').forEach(c => c.classList.remove('active'));
+            const cardEl = document.querySelector(`.st-card[data-id="${cardId}"]`);
+            if (cardEl) {
+                cardEl.classList.add('active');
+                if (!fromPlayback) cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                updateScriptStyleControls();
+                updatePreviewDisplay();
+            } else {
+                updatePreviewDisplay();
+            }
+        }
+
         function updatePreviewDisplay() {
-            const headerEl = document.querySelector('.preview-header');
+            const headerEl = document.querySelector('.st-preview-header');
             if (headerEl) {
-                headerEl.textContent = document.getElementById('header-text-input')?.value || '';
-                headerEl.style.backgroundColor = document.getElementById('header-bg-color')?.value || '#e82c43';
-                headerEl.style.color = document.getElementById('header-font-color')?.value || '#ffffff';
-                headerEl.style.fontFamily = document.getElementById('header-font-select')?.value || 'GmarketSans';
+                headerEl.textContent = document.getElementById('st-setting-header-text')?.value || '';
+                headerEl.style.backgroundColor = document.getElementById('st-setting-header-bg')?.value || '#e82c43';
+                headerEl.style.color = document.getElementById('st-setting-header-color')?.value || '#ffffff';
+                headerEl.style.fontFamily = document.getElementById('st-setting-header-font')?.value || 'GmarketSans';
             }
-            const titleEl = document.querySelector('.project-info .title');
+            const titleEl = document.querySelector('.st-project-info .title');
             if (titleEl) {
-                titleEl.textContent = document.getElementById('project-title-input')?.value || '';
-                titleEl.style.color = document.getElementById('project-title-color')?.value || '#000';
+                titleEl.textContent = document.getElementById('st-setting-project-title')?.value || '';
+                titleEl.style.color = document.getElementById('st-setting-title-color')?.value || '#000';
             }
-            const metaEl = document.querySelector('.project-info span');
+            const metaEl = document.querySelector('.st-project-info span');
             if (metaEl) {
-                metaEl.textContent = `${document.getElementById('project-author-input')?.value || ''} | 조회수 ${Number(document.getElementById('project-views-input')?.value || 0).toLocaleString()}`;
-                metaEl.style.color = document.getElementById('project-meta-color')?.value || '#555';
+                metaEl.textContent = `${document.getElementById('st-setting-project-author')?.value || ''} | 조회수 ${Number(document.getElementById('st-setting-project-views')?.value || 0).toLocaleString()}`;
+                metaEl.style.color = document.getElementById('st-setting-meta-color')?.value || '#555';
             }
             const card = scriptCards.find(c => c.id === selectedCardId);
-            const previewText = document.getElementById('preview-text');
-            const previewImage = document.getElementById('preview-image');
+            const previewText = document.getElementById('st-preview-text');
+            const previewImage = document.getElementById('st-preview-image');
             if (!previewText || !previewImage) return;
             previewText.textContent = card ? card.text : '스크립트를 추가하거나 선택하세요.';
             if (card && card.imageUrl) {
@@ -351,45 +378,111 @@
             } else {
                 previewImage.style.display = 'none';
             }
-            if (card) Object.assign(previewText.style, { color: '#000', fontFamily: 'Nanum Gothic', fontSize: '24px', transform: 'translate(0px, 0px)' }, card.style);
+            if (card) {
+                Object.assign(previewText.style, {
+                    color: card.style.color || '#000',
+                    fontFamily: card.style.fontFamily || 'Nanum Gothic',
+                    fontSize: card.style.fontSize || '24px',
+                    transform: card.style.transform || 'translate(0px, 0px)'
+                });
+            } else {
+                 Object.assign(previewText.style, {
+                    color: '#000', fontFamily: 'Nanum Gothic', fontSize: '24px', transform: 'translate(0px, 0px)'
+                });
+            }
         }
+
         function updateScriptStyleControls() {
             const card = scriptCards.find(c => c.id === selectedCardId); if (!card) return;
-            document.getElementById('script-color-input').value = card.style?.color || '#000000';
-            document.getElementById('script-font-select-main').value = card.style?.fontFamily || `'Nanum Gothic', sans-serif`;
-            document.getElementById('script-fontsize-input').value = (card.style?.fontSize || '24px').replace('px','');
+            document.getElementById('st-setting-script-color').value = card.style?.color || '#000000';
+            document.getElementById('st-setting-script-font').value = card.style?.fontFamily || `'Nanum Gothic', sans-serif`;
+            document.getElementById('st-setting-script-size').value = (card.style?.fontSize || '24px').replace('px','');
             const [x, y] = (card.style?.transform || 'translate(0px, 0px)').match(/-?\d+/g) || ['0', '0'];
-            document.getElementById('script-x-pos').value = x; document.getElementById('script-y-pos').value = y;
+            document.getElementById('st-setting-script-x').value = x;
+            document.getElementById('st-setting-script-y').value = y;
         }
-        function applyScriptStylesToSelectedCard() { const card = scriptCards.find(c => c.id === selectedCardId); if (!card) return; card.style = { color: document.getElementById('script-color-input').value, fontFamily: document.getElementById('script-font-select-main').value, fontSize: document.getElementById('script-fontsize-input').value + 'px', transform: `translate(${document.getElementById('script-x-pos').value}px, ${document.getElementById('script-y-pos').value}px)` }; updatePreviewDisplay(); }
-        function playBGM(bgmData = globalBGM) { if (bgmData && bgmData.url) { if (bgmPlayer.src !== bgmData.url) bgmPlayer.src = bgmData.url; bgmPlayer.volume = globalBGM.volume; bgmPlayer.currentTime = bgmData.startTime || 0; bgmPlayer.play().catch(e => console.error("BGM Playback Error:", e)); } else { bgmPlayer.pause(); } }
+
+        function applyScriptStylesToSelectedCard() {
+            const card = scriptCards.find(c => c.id === selectedCardId); if (!card) return;
+            card.style = {
+                color: document.getElementById('st-setting-script-color').value,
+                fontFamily: document.getElementById('st-setting-script-font').value,
+                fontSize: document.getElementById('st-setting-script-size').value + 'px',
+                transform: `translate(${document.getElementById('st-setting-script-x').value}px, ${document.getElementById('st-setting-script-y').value}px)`
+            };
+            updatePreviewDisplay();
+        }
+
+        function playBGM(bgmData = globalBGM) {
+            if (bgmData && bgmData.url) {
+                if (bgmPlayer.src !== bgmData.url) bgmPlayer.src = bgmData.url;
+                bgmPlayer.volume = globalBGM.volume;
+                bgmPlayer.currentTime = bgmData.startTime || 0;
+                bgmPlayer.play().catch(e => console.error("BGM Playback Error:", e));
+            } else {
+                bgmPlayer.pause();
+            }
+        }
         bgmPlayer.addEventListener('timeupdate', () => { if (!isPlaying) return; if (globalBGM.endTime && bgmPlayer.currentTime >= globalBGM.endTime) { bgmPlayer.currentTime = globalBGM.startTime || 0; } });
+
         function togglePlay() { isPlaying ? stopPlayback() : startPlayback(); }
-        function startPlayback() { const unready = scriptCards.some(c => !c.ttsReady && c.text.trim()); if (unready) return alert('아직 음성 생성이 완료되지 않은 스크립트가 있습니다.'); if (scriptCards.length === 0) return; isPlaying = true; playBtn.textContent = '❚❚'; playBGM(); playCardByIndex(0); }
-        function stopPlayback() { isPlaying = false; playBtn.textContent = '▶'; ttsPlayer.pause(); bgmPlayer.pause(); }
-        function playCardByIndex(index) { if (index >= scriptCards.length || !isPlaying) { stopPlayback(); return; } playbackCurrentIndex = index; const card = scriptCards[index]; selectCard(card.id, true); ttsPlayer.src = card.audioUrl; ttsPlayer.play(); ttsPlayer.onended = () => playCardByIndex(index + 1); }
+        function startPlayback() {
+            const unready = scriptCards.some(c => !c.ttsReady && c.text.trim());
+            if (unready) return alert('아직 음성 생성이 완료되지 않은 스크립트가 있습니다.');
+            if (scriptCards.length === 0) return;
+            isPlaying = true;
+            playAllBtn.textContent = '❚❚';
+            playBGM();
+            playCardByIndex(0);
+        }
+
+        function stopPlayback() {
+            isPlaying = false;
+            playAllBtn.textContent = '▶';
+            ttsPlayer.pause();
+            bgmPlayer.pause();
+        }
+
+        function playCardByIndex(index) {
+            if (index >= scriptCards.length || !isPlaying) {
+                stopPlayback();
+                return;
+            }
+            playbackCurrentIndex = index;
+            const card = scriptCards[index];
+            selectCard(card.id, true);
+            ttsPlayer.src = card.audioUrl;
+            ttsPlayer.play();
+            ttsPlayer.onended = () => playCardByIndex(index + 1);
+        }
 
         function initialize() {
-            document.getElementById('preview-panel').innerHTML = `
-                <div class="preview-header"></div><div class="preview-content"><div class="project-info"><div class="title"></div><span></span></div>
-                <div class="script-display-area"><div id="preview-text"></div><div id="preview-image-container"><img id="preview-image"></div></div></div>`;
+            document.getElementById('st-preview-panel').innerHTML = `
+                <div class="st-preview-header"></div><div class="st-preview-content"><div class="st-project-info"><div class="title"></div><span></span></div>
+                <div class="st-script-display"><div id="st-preview-text"></div><div id="st-preview-image-container"><img id="st-preview-image"></div></div></div>`;
             renderControls();
-            addScriptBtnMain.addEventListener('click', () => addScriptCard(''));
-            playBtn.addEventListener('click', togglePlay);
+            addCardBtn.addEventListener('click', () => addScriptCard(''));
+            playAllBtn.addEventListener('click', togglePlay);
 
-            new Sortable(scriptContainer, {
+            document.getElementById('st-setting-global-bgm').addEventListener('change', (e) => {
+                const url = e.target.value;
+                if (url) { openBgmEditor(url, globalBGM, ({ startTime, endTime }) => { globalBGM = { ...globalBGM, url, startTime, endTime }; if (isPlaying) playBGM(); });
+                } else { globalBGM.url = null; if (isPlaying) bgmPlayer.pause(); }
+            });
+            document.getElementById('st-setting-global-bgm-volume').addEventListener('input', (e) => { globalBGM.volume = parseFloat(e.target.value); bgmPlayer.volume = globalBGM.volume; });
+
+            new Sortable(cardContainer, {
                 animation: 150,
-                handle: '.card-drag-handle',
+                handle: '.st-card-drag-handle',
                 onEnd: function(evt) {
-                    const oldIndex = evt.oldIndex;
-                    const newIndex = evt.newIndex;
+                    const { oldIndex, newIndex } = evt;
                     const [movedItem] = scriptCards.splice(oldIndex, 1);
                     scriptCards.splice(newIndex, 0, movedItem);
                     updateCardNumbers();
                 }
             });
 
-            addScriptCard('이제 모든 기능이 정상적으로 작동합니다!');
+            addScriptCard('SunsakTool에 오신 것을 환영합니다!');
         }
         
         initialize();
