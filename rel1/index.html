@@ -131,8 +131,7 @@
             { name: 'spider', url: 'https://thisisssullmaker.netlify.app/sfx/Spider.mp3' },
             { name: 'white-color', url: 'https://thisisssullmaker.netlify.app/sfx/White-Color.mp3' }
         ];
-
-        // ✨ FIX: 모든 효과음 목록을 완벽하게 반영!
+        
         const SFX_LIST = [
             { name: '효과음 없음', url: '' },
             { name: '뾱 (물방울)', url: 'https://thisisssullmaker.netlify.app/sfx/062_뾱 (물방울).mp3' },
@@ -389,6 +388,21 @@
                               </div>`;
             cardContainer.appendChild(cardEl);
             
+            // ✨ FIX: 누락되었던 이미지 추가 기능 로직 복원
+            const fileInput = cardEl.querySelector(`#${cardId}-file`);
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        cardData.imageUrl = event.target.result;
+                        if (selectedCardId === cardId) {
+                            updatePreviewDisplay();
+                        }
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+            
             cardEl.querySelector('.st-play-clip-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (isPlaying) stopPlayback();
@@ -501,11 +515,16 @@
             const previewImage = document.getElementById('st-preview-image');
             if (!previewText || !previewImage) return;
             previewText.textContent = card ? card.text : '스크립트를 추가하거나 선택하세요.';
+            
+            // ✨ FIX: 이미지 표시 로직 복원
             if (card && card.imageUrl) {
-                previewImage.src = card.imageUrl; previewImage.style.display = 'block';
+                previewImage.src = card.imageUrl;
+                previewImage.style.display = 'block';
             } else {
+                previewImage.src = '';
                 previewImage.style.display = 'none';
             }
+
             if (card) {
                 Object.assign(previewText.style, {
                     color: card.style.color || '#000',
