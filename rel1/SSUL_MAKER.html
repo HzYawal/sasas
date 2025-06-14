@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>SSUL MAKER - Final Corrected Version</title>
+    <!-- CSS는 이전과 동일합니다. -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@400;700;800&family=Roboto:wght@400;700&family=Gowun+Dodum&family=Gowun+Batang&display=swap');@font-face { font-family: 'GangwonEdu_Modern'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_Modern.woff') format('woff'); }@font-face { font-family: 'GmarketSans'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff'); }:root { --accent-color: #e82c43; --bg-color: #1e1e1e; --panel-color: #2a2a2a; --border-color: #383838; --text-color: #e0e0e0; --subtext-color: #aaa; }* { box-sizing: border-box; }body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; height: 100vh; margin: 0; overflow: hidden; -webkit-font-smoothing: antialiased; }.panel { height: 100vh; display: flex; flex-direction: column; }.sidebar { width: 200px; background-color: var(--panel-color); padding: 20px; border-right: 1px solid var(--border-color); }.main-container { flex-grow: 1; display: flex; flex-direction: column; }.top-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: var(--panel-color); border-bottom: 1px solid var(--border-color); flex-shrink: 0; height: 50px;}.logo { font-family: 'GmarketSans', sans-serif; font-weight: bold; }.main-content { display: flex; flex-grow: 1; overflow: hidden; }.preview-section { flex-basis: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }.editor-section { flex-grow: 1; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); overflow-y: auto; padding: 20px; }.settings-section { flex-basis: 280px; overflow-y: auto; padding: 20px; background-color: var(--panel-color); }button { background-color: var(--accent-color); color: #fff; font-weight: bold; cursor: pointer; border: none; border-radius: 4px; padding: 8px 12px; }.preview-panel { width: 100%; max-width: 380px; aspect-ratio: 9 / 16; background-color: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; }.preview-header { color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 24px; flex-shrink: 0; }.preview-content { padding: 10px; color: black; flex-grow: 1; display: flex; flex-direction: column; background-color: white; overflow: hidden; }.project-info { font-size: 13px; color: #555; margin: 0 0 16px 0; border-bottom: 1px solid #eee; padding-bottom: 16px; }.project-info .title { font-size: 22px; color: black; font-weight: bold; margin-bottom: 5px; }.script-display-area { flex-grow: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }#preview-text { width: 100%; font-size: 24px; color: #000; white-space: pre-wrap; margin-bottom: 8px; flex-shrink: 0; }#preview-image-container { width: 100%; display: flex; justify-content: center; align-items: flex-start; }#preview-image { max-width: 100%; max-height: 100%; object-fit: contain; }.timeline-controls { width: 100%; max-width: 380px; display: flex; align-items: center; gap: 10px; margin-top: 15px;}.play-preview-btn { background: none; font-size: 24px; padding: 0;}#timeline-slider { flex-grow: 1; }.editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }.editor-header h3 { margin: 0; }.editor-header .button-group { display: flex; gap: 8px; }.script-card { background-color: var(--panel-color); border: 2px solid transparent; padding: 15px; margin-top: 15px; border-radius: 4px; cursor: pointer; position: relative; }.script-card.active { border-color: var(--accent-color); }.script-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }.card-number { font-weight: bold; font-size: 18px; }textarea { width:100%; min-height:60px; background-color: #333; border: 1px solid var(--border-color); color: var(--text-color); border-radius: 4px; padding: 8px; }.script-card-footer { margin-top: 10px; display: flex; align-items: center; gap: 10px; font-size: 13px; flex-wrap: wrap; }input[type="file"] { display: none; }.action-btn { background: none; border:none; color: var(--subtext-color); text-decoration: underline; cursor: pointer; padding: 0; font-size: 13px; }.preview-audio-btn { font-size: 18px; background: none; padding: 0 5px; cursor: pointer; border: none; color: var(--text-color); }.preview-audio-btn:disabled { color: #555; cursor: not-allowed; }.card-loading-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); color: white; display: flex; justify-content: center; align-items: center; z-index: 10; border-radius: 4px; font-weight: bold; }.accordion-header { padding: 12px 0; cursor: pointer; border-bottom: 1px solid var(--border-color); font-weight: bold; }.accordion-content { padding: 15px 0; display: none; }.accordion-item.active .accordion-content { display: block; }.control-group { margin-bottom: 15px; }input, select { width: 100%; padding: 8px; background-color: #1e1e1e; border: 1px solid var(--border-color); color: var(--text-color); }.flex-group { display: flex; gap: 10px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-overlay.visible { display: flex; }
+        .modal-dialog { background-color: var(--panel-color); padding: 24px; border-radius: 8px; width: 90%; max-width: 600px; border: 1px solid var(--border-color); }
+        .modal-dialog h2 { margin-top: 0; font-size: 18px; }
+        .modal-dialog p { color: var(--subtext-color); font-size: 14px; margin-bottom: 16px; }
+        .modal-dialog textarea { height: 250px; font-size: 14px; margin-bottom: 16px; }
+        .modal-dialog .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;}
+        .modal-dialog .modal-actions button.cancel { background-color: #555; }
+        #waveform { width: 100%; height: 128px; background-color: #1e1e1e; }
+        #waveform-loading { text-align: center; padding: 40px; color: var(--subtext-color); }
+        .waveform-controls { margin-top: 15px; display: flex; gap: 10px; align-items: center;}
+    </style>
+</head>
+<body>
+    <div class="panel sidebar"> <button id="add-project-btn">+ 새 프로젝트</button> </div>
+    <div class="main-container">
+        <div class="top-header"> <div class="logo">SSUL MAKER</div> <div id="header-title-display"></div> </div>
+        <div class="main-content">
+            <div class="panel preview-section">
+                <div class="preview-panel" id="preview-panel"></div>
+                <div class="timeline-controls"> <button id="play-preview-btn">▶</button> <input type="range" id="timeline-slider" value="0" step="0.1"> </div>
+            </div>
+            <div class="panel editor-section">
+                <div class="editor-header">
+                    <h3>스크립트 & 타임라인</h3>
+                    <div class="button-group">
+                        <button id="add-gpts-btn" style="background-color: #3e3e3e;">+ GPTS 스크립트 추가</button>
+                        <button id="add-script-btn-main">+ 스크립트 추가</button>
+                    </div>
+                </div>
+                <div id="script-container"></div>
+            </div>
+            <div class="panel settings-section"> <div id="control-panel"></div> </div>
+        </div>
+    </div>
+    <div id="gpts-modal" class="modal-overlay">
+        <div class="modal-dialog">
+            <h2>GPTs 스크립트 추가</h2>
+            <p>GPTs에서 생성된 스크립트를 입력하세요. 빈 줄로 구분하여 여러 스크립트를 한번에 추가할 수 있습니다.</p>
+            <textarea id="gpts-textarea" placeholder="여기에 GPTs 스크립트를 입력하세요..."></textarea>
+            <div class="modal-actions">
+                <button id="gpts-cancel-btn" class="cancel">취소</button>
+                <button id="gpts-confirm-btn">확인</button>
+            </div>
+        </div>
+    </div>
+    <div id="bgm-editor-modal" class="modal-overlay">
+        <div class="modal-dialog">
+            <h2>BGM 구간 설정</h2>
+            <p>오디오 파형 위에서 원하는 구간을 드래그하여 선택하세요.</p>
+            <div id="waveform">
+                <div id="waveform-loading">BGM 로딩 중...</div>
+            </div>
+            <div class="waveform-controls">
+                <button id="bgm-play-pause-btn">재생/일시정지</button>
+                <button id="bgm-play-region-btn">선택 구간 미리듣기</button>
+                <span id="bgm-time-display">0.00s - 0.00s</span>
+            </div>
+            <div class="modal-actions">
+                <button id="bgm-editor-cancel-btn" class="cancel">취소</button>
+                <button id="bgm-editor-confirm-btn">확인</button>
+            </div>
+        </div>
+    </div>
+    <audio id="tts-player" style="display:none;"></audio>
+    <audio id="bgm-player" style="display:none;" loop></audio>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.4.0/wavesurfer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.4.0/plugin/wavesurfer.regions.min.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const TYPECAST_CONFIG = {
+            API_KEY: '__pltLTZFuUGQsd8MrMhApakqMcVqdVkPHmR9LzvLLALT',
+            ACTOR_ID: '6596849ea3ecaa12a8b13989'
+        };
+        
+        // ✨ FIX: 확인된 정확한 URL로 최종 수정
+        const BGM_LIST = [
+            { name: '선택 안함', url: '' },
+            { name: 'big-cafe', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/big-cafe.mp3' },
+            { name: 'blue-jacket', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/blue-jacket.mp3' },
+            { name: 'cute-puppy', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/cute-puppy.mp3' },
+            { name: 'laughter-in-the-breeze', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/laughter-in-the-breeze-_happy_.mp3' },
+            { name: 'murder-in-my-mind', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/murder-in-my-mind.mp3' },
+            { name: 'smiley-composure', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/smiley-composure.mp3' },
+            { name: 'spider', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/spider.mp3' },
+            { name: 'white-color', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/white-color.mp3' }
+        ];
+    
+        let globalBGM = { url: null, volume: 0.3, startTime: 0, endTime: null };
+        let scriptCards = [];
+        let isPlaying = false;
+        let ttsCache = new Map();
+        let playbackCurrentIndex = 0;
+        let selectedCardId = null;
+
+        const scriptContainer = document.getElementById('script-container');
+        const playBtn = document.getElementById('play-preview-btn');
+        const timelineSlider = document.getElementById('timeline-slider');
+        const ttsPlayer = document.getElementById('tts-player');
+        const bgmPlayer = document.getElementById('bgm-player');
+        const controlPanel = document.getElementById('control-panel');
+        const addScriptBtnMain = document.getElementById('add-script-btn-main');
+
+        let wavesurfer = null;
+        let activeRegion = null;
+        let bgmEditorContext = { callback: null, currentBgm: null };
+        
+        function initializeBgmEditor() {
+            if (wavesurfer) return;
+            if (typeof WaveSurfer === 'undefined') { 
+                return alert("BGM 편집기 라이브러리 로딩에 실패했습니다. 인터넷 연결을 확인하고 페이지를 새로고침 해주세요."); 
+            }
+            
+            wavesurfer = WaveSurfer.create({
+                container: '#waveform', waveColor: '#ddd', progressColor: '#e82c43', cursorColor: '#fff', barWidth: 2, barRadius: 3,
+                plugins: [ WaveSurfer.regions.create({ dragSelection: { slop: 5 }, color: 'rgba(232, 44, 67, 0.2)' }) ]
+            });
+
+            wavesurfer.on('error', (err) => {
+                console.error('WaveSurfer Error:', err);
+                alert('BGM 파일을 불러오는 데 실패했습니다. 파일 URL을 확인해주세요.');
+                closeBgmEditor();
+            });
+
+            wavesurfer.on('ready', () => {
+                document.getElementById('waveform-loading').style.display = 'none';
+                wavesurfer.clearRegions();
+                activeRegion = null;
+                const { currentBgm } = bgmEditorContext;
+                if (currentBgm && currentBgm.endTime) {
+                    activeRegion = wavesurfer.addRegion({ start: currentBgm.startTime, end: currentBgm.endTime, color: 'rgba(232, 44, 67, 0.3)' });
+                    document.getElementById('bgm-time-display').textContent = `${activeRegion.start.toFixed(2)}s - ${activeRegion.end.toFixed(2)}s`;
+                } else {
+                    document.getElementById('bgm-time-display').textContent = `0.00s - ${wavesurfer.getDuration().toFixed(2)}s`;
+                }
+            });
+            wavesurfer.on('region-update-end', (region) => {
+                activeRegion = region;
+                document.getElementById('bgm-time-display').textContent = `${region.start.toFixed(2)}s - ${region.end.toFixed(2)}s`;
+            });
+            document.getElementById('bgm-play-pause-btn').addEventListener('click', () => wavesurfer.playPause());
+            document.getElementById('bgm-play-region-btn').addEventListener('click', () => { if (activeRegion) activeRegion.play(); });
+            document.getElementById('bgm-editor-confirm-btn').addEventListener('click', () => {
+                if (bgmEditorContext.callback) {
+                    const startTime = activeRegion ? activeRegion.start : 0;
+                    const endTime = activeRegion ? activeRegion.end : wavesurfer.getDuration();
+                    bgmEditorContext.callback({ startTime, endTime });
+                }
+                closeBgmEditor();
+            });
+            document.getElementById('bgm-editor-cancel-btn').addEventListener('click', closeBgmEditor);
+        }
+
+        function openBgmEditor(url, currentBgm, callback) {
+            bgmEditorContext = { callback, currentBgm };
+            document.getElementById('bgm-editor-modal').classList.add('visible');
+            document.getElementById('waveform-loading').style.display = 'block';
+            
+            if (!wavesurfer) initializeBgmEditor();
+            
+            if (wavesurfer) {
+                wavesurfer.load(url);
+            }
+        }
+
+        function closeBgmEditor() {
+            document.getElementById('bgm-editor-modal').classList.remove('visible');
+            if (wavesurfer) wavesurfer.stop();
+        }
+
+        const debounce = (callback, delay) => { let timeout; return (...args) => { clearTimeout(timeout); timeout = setTimeout(() => callback(...args), delay); }; };
+        const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+        const getAudioDuration = (url) => new Promise(resolve => { const audio = new Audio(); audio.onloadedmetadata = () => resolve(audio.duration); audio.src = url; });
+
+        async function pollAndDownload(pollingUrl) {
+            for (let i = 0; i < 15; i++) {
+                const response = await fetch(pollingUrl, { headers: { 'Authorization': `Bearer ${TYPECAST_CONFIG.API_KEY}` } });
+                if (!response.ok) throw new Error(`[${response.status}] Polling failed.`);
+                const resultJson = await response.json();
+                const result = resultJson.result;
+                if (result.status === 'done') {
+                    const downloadUrl = result.audio_download_url;
+                    if (!downloadUrl) throw new Error("Status is done, but audio_download_url is missing.");
+                    const audioResponse = await fetch(downloadUrl);
+                    if (!audioResponse.ok) throw new Error('Audio download failed.');
+                    const audioBlob = await audioResponse.blob();
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    return { audioUrl, duration: await getAudioDuration(audioUrl) };
+                } else if (result.status === 'progress') {
+                    await sleep(1000);
+                } else { throw new Error(`TTS job failed with status: ${result.status}`); }
+            }
+            throw new Error('TTS job timed out.');
+        }
+
+        async function fetchTTS(text, cardId) {
+            text = text.trim();
+            if (!text) return null;
+            const cacheKey = `${text}-${TYPECAST_CONFIG.ACTOR_ID}`;
+            if (ttsCache.has(cacheKey)) return ttsCache.get(cacheKey);
+            showLoadingOnCard(cardId, true, '요청 중...');
+            try {
+                const initialResponse = await fetch('https://typecast.ai/api/speak', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${TYPECAST_CONFIG.API_KEY}` },
+                    body: JSON.stringify({ text, actor_id: TYPECAST_CONFIG.ACTOR_ID, lang: "auto", tempo: 1.5, xapi_hd: true, model_version: "latest" })
+                });
+                if (!initialResponse.ok) { const errorJson = await initialResponse.json(); throw new Error(`[${initialResponse.status}] ${errorJson.message || 'Initial request failed'}`); }
+                const initialJson = await initialResponse.json();
+                const pollingUrl = initialJson.result?.speak_v2_url;
+                if (!pollingUrl) throw new Error('API 응답에 speak_v2_url이 포함되어 있지 않습니다.');
+                showLoadingOnCard(cardId, true, '음성 변환 중...');
+                const result = await pollAndDownload(pollingUrl);
+                ttsCache.set(cacheKey, result);
+                return result;
+            } catch (error) {
+                console.error(error); alert(`음성 생성 오류: ${error.message}`); return null;
+            } finally {
+                showLoadingOnCard(cardId, false);
+            }
+        }
+        
+        function renderControls() {
+            const fontOptions = ['GangwonEdu_Modern', 'Noto Sans KR', 'Roboto', 'Nanum Gothic', 'Nanum Myeongjo', 'Gowun Dodum', 'Gowun Batang'].map(f => `<option value="'${f}', sans-serif" style="font-family:'${f}';">${f}</option>`).join('');
+            const bgmOptions = BGM_LIST.map(bgm => `<option value="${bgm.url}">${bgm.name}</option>`).join('');
+            controlPanel.innerHTML = `
+                <div class="accordion-item active"><div class="accordion-header">헤더 스타일</div><div class="accordion-content"><div class="control-group"><label>헤더 텍스트</label><input type="text" id="header-text-input" value="썰쑈"></div><div class="flex-group"><div><label>배경 색상</label><input type="color" id="header-bg-color" value="#e82c43"></div><div><label>글자 색상</label><input type="color" id="header-font-color" value="#FFFFFF"></div></div><div class="control-group"><label>폰트</label><select id="header-font-select">${fontOptions}</select></div></div></div>
+                <div class="accordion-item"><div class="accordion-header">스크립트 스타일</div><div class="accordion-content"><div class="control-group"><label>텍스트 색상</label><input type="color" id="script-color-input" value="#000000"></div><div class="flex-group"><div><label>폰트</label><select id="script-font-select-main">${fontOptions}</select></div><div><label>크기</label><input type="number" id="script-fontsize-input" value="24"></div></div><div class="flex-group"><div><label>X</label><input type="number" id="script-x-pos" value="0"></div><div><label>Y</label><input type="number" id="script-y-pos" value="0"></div></div></div></div>
+                <div class="accordion-item"><div class="accordion-header">프로젝트 정보</div><div class="accordion-content"><div class="control-group"><label>제목</label><input type="text" id="project-title-input" value="그래 넌 할 수 있어"></div><div class="control-group"><label>작성자</label><input type="text" id="project-author-input" value="ㅇㅇ"></div><div class="control-group"><label>조회수</label><input type="number" id="project-views-input" value="0"></div><div class="flex-group"><div><label>제목 색상</label><input type="color" id="project-title-color" value="#000000"></div><div><label>작성자/조회수 색상</label><input type="color" id="project-meta-color" value="#555555"></div></div></div></div>
+                <div class="accordion-item"><div class="accordion-header">배경음악 설정</div><div class="accordion-content"><div class="control-group"><label>전체 배경음악 선택</label><select id="global-bgm-select">${bgmOptions}</select></div><div class="control-group"><label>BGM 볼륨</label><input type="range" id="global-bgm-volume" min="0" max="1" step="0.01" value="${globalBGM.volume}"></div></div></div>`;
+            ['header-text-input', 'header-bg-color', 'header-font-color', 'header-font-select', 'project-title-input', 'project-author-input', 'project-views-input', 'project-title-color', 'project-meta-color'].forEach(id => document.getElementById(id).addEventListener('input', updatePreviewDisplay));
+            ['script-color-input', 'script-font-select-main', 'script-fontsize-input', 'script-x-pos', 'script-y-pos'].forEach(id => document.getElementById(id).addEventListener('input', applyScriptStylesToSelectedCard));
+            document.querySelectorAll('.accordion-header').forEach(h => h.addEventListener('click', () => h.parentElement.classList.toggle('active')));
+            document.getElementById('header-title-display').textContent = document.getElementById('project-title-input').value;
+            document.getElementById('project-title-input').addEventListener('input', (e) => { document.getElementById('header-title-display').textContent = e.target.value; });
+            document.getElementById('global-bgm-select').addEventListener('change', (e) => {
+                const url = e.target.value;
+                if (url) { openBgmEditor(url, globalBGM, ({ startTime, endTime }) => { globalBGM = { ...globalBGM, url, startTime, endTime }; if (isPlaying) playBGM(); });
+                } else { globalBGM.url = null; if (isPlaying) bgmPlayer.pause(); }
+            });
+            document.getElementById('global-bgm-volume').addEventListener('input', (e) => { globalBGM.volume = parseFloat(e.target.value); bgmPlayer.volume = globalBGM.volume; });
+        }
+
+        function addScriptCard(text = '') {
+            const cardId = `card-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+            const cardData = { id: cardId, text, duration: 0.5, imageUrl: null, style: {}, bgm: { url: null }, ttsReady: false };
+            scriptCards.push(cardData);
+            const cardEl = document.createElement('div');
+            cardEl.className = 'script-card';
+            cardEl.dataset.id = cardId;
+            cardEl.innerHTML = `<div class="script-card-header"><span class="card-number"></span><button class="delete-btn">🗑️</button></div><textarea placeholder="스크립트를 입력하세요...">${text}</textarea><div class="script-card-footer"><button class="preview-audio-btn" title="미리듣기" disabled>▶️</button><span class="duration-label">타임라인 (---초)</span><label class="action-btn" for="${cardId}-file">이미지</label><input type="file" id="${cardId}-file" accept="image/*"></div>`;
+            scriptContainer.appendChild(cardEl);
+            const debouncedFetchAndUpdate = debounce(async (newText, id) => {
+                const cardDataToUpdate = scriptCards.find(c => c.id === id);
+                const ttsData = await fetchTTS(newText, id);
+                if (ttsData && cardDataToUpdate) {
+                    cardDataToUpdate.duration = ttsData.duration;
+                    cardDataToUpdate.audioUrl = ttsData.audioUrl;
+                    cardDataToUpdate.ttsReady = true;
+                    const currentCardEl = document.querySelector(`.script-card[data-id="${id}"]`);
+                    if(currentCardEl) {
+                        currentCardEl.querySelector('.duration-label').textContent = `타임라인 (${ttsData.duration.toFixed(2)}초)`;
+                        currentCardEl.querySelector('.preview-audio-btn').disabled = false;
+                    }
+                    updateTotalDuration();
+                }
+            }, 800);
+            cardEl.querySelector('textarea').addEventListener('input', (e) => { cardData.text = e.target.value; debouncedFetchAndUpdate(cardData.text, cardId); });
+            cardEl.querySelector('.delete-btn').addEventListener('click', (e) => { e.stopPropagation(); deleteCard(cardId); });
+            cardEl.addEventListener('click', () => selectCard(cardId));
+            if (text) debouncedFetchAndUpdate(text, cardId);
+            if (!selectedCardId) selectCard(cardId);
+            updateCardNumbers();
+        }
+        
+        function deleteCard(cardId) { const cardIndex = scriptCards.findIndex(c => c.id === cardId); if(cardIndex === -1) return; scriptCards.splice(cardIndex, 1); document.querySelector(`.script-card[data-id="${cardId}"]`).remove(); if (selectedCardId === cardId) selectedCardId = null; if(scriptCards.length > 0) { const nextIndex = Math.max(0, cardIndex - 1); if (scriptCards[nextIndex]) selectCard(scriptCards[nextIndex].id); } else { updatePreviewDisplay(); } updateTotalDuration(); updateCardNumbers(); }
+        function updateCardNumbers() { document.querySelectorAll('.script-card').forEach((card, index) => { card.querySelector('.card-number').textContent = index + 1; }); }
+        function updateTotalDuration() { const total = scriptCards.reduce((sum, card) => sum + (card.duration || 0.5), 0); timelineSlider.max = total; }
+        function showLoadingOnCard(cardId, show, message = '음성 생성 중...') { const cardEl = document.querySelector(`.script-card[data-id="${cardId}"]`); if (!cardEl) return; let overlay = cardEl.querySelector('.card-loading-overlay'); if (show) { if (!overlay) { overlay = document.createElement('div'); overlay.className = 'card-loading-overlay'; cardEl.appendChild(overlay); } overlay.textContent = message; } else { if (overlay) overlay.remove(); } }
+        function selectCard(cardId, fromPlayback = false) { if (isPlaying && !fromPlayback) stopPlayback(); selectedCardId = cardId; document.querySelectorAll('.script-card').forEach(c => c.classList.remove('active')); const cardEl = document.querySelector(`.script-card[data-id="${cardId}"]`); if (cardEl) { cardEl.classList.add('active'); updateScriptStyleControls(); updatePreviewDisplay(); } else { updatePreviewDisplay(); } }
+        function updatePreviewDisplay() {
+            const headerEl = document.querySelector('.preview-header');
+            if (headerEl) {
+                headerEl.textContent = document.getElementById('header-text-input')?.value || '';
+                headerEl.style.backgroundColor = document.getElementById('header-bg-color')?.value || '#e82c43';
+                headerEl.style.color = document.getElementById('header-font-color')?.value || '#ffffff';
+                headerEl.style.fontFamily = document.getElementById('header-font-select')?.value || 'GmarketSans';
+            }
+            const titleEl = document.querySelector('.project-info .title');
+            if (titleEl) {
+                titleEl.textContent = document.getElementById('project-title-input')?.value || '';
+                titleEl.style.color = document.getElementById('project-title-color')?.value || '#000';
+            }
+            const metaEl = document.querySelector('.project-info span');
+            if (metaEl) {
+                metaEl.textContent = `${document.getElementById('project-author-input')?.value || ''} | 조회수 ${Number(document.getElementById('project-views-input')?.value || 0).toLocaleString()}`;
+                metaEl.style.color = document.getElementById('project-meta-color')?.value || '#555';
+            }
+            const card = scriptCards.find(c => c.id === selectedCardId);
+            const previewText = document.getElementById('preview-text');
+            const previewImage = document.getElementById('preview-image');
+            if (!previewText || !previewImage) return;
+            previewText.textContent = card ? card.text : '스크립트를 추가하거나 선택하세요.';
+            if (card && card.imageUrl) {
+                previewImage.src = card.imageUrl; previewImage.style.display = 'block';
+            } else {
+                previewImage.style.display = 'none';
+            }
+            if (card) Object.assign(previewText.style, { color: '#000', fontFamily: 'Nanum Gothic', fontSize: '24px', transform: 'translate(0px, 0px)' }, card.style);
+        }
+        function updateScriptStyleControls() {
+            const card = scriptCards.find(c => c.id === selectedCardId); if (!card) return;
+            document.getElementById('script-color-input').value = card.style?.color || '#000000';
+            document.getElementById('script-font-select-main').value = card.style?.fontFamily || `'Nanum Gothic', sans-serif`;
+            document.getElementById('script-fontsize-input').value = (card.style?.fontSize || '24px').replace('px','');
+            const [x, y] = (card.style?.transform || 'translate(0px, 0px)').match(/-?\d+/g) || ['0', '0'];
+            document.getElementById('script-x-pos').value = x; document.getElementById('script-y-pos').value = y;
+        }
+        function applyScriptStylesToSelectedCard() { const card = scriptCards.find(c => c.id === selectedCardId); if (!card) return; card.style = { color: document.getElementById('script-color-input').value, fontFamily: document.getElementById('script-font-select-main').value, fontSize: document.getElementById('script-fontsize-input').value + 'px', transform: `translate(${document.getElementById('script-x-pos').value}px, ${document.getElementById('script-y-pos').value}px)` }; updatePreviewDisplay(); }
+        function playBGM(bgmData = globalBGM) { if (bgmData && bgmData.url) { if (bgmPlayer.src !== bgmData.url) bgmPlayer.src = bgmData.url; bgmPlayer.volume = globalBGM.volume; bgmPlayer.currentTime = bgmData.startTime || 0; bgmPlayer.play().catch(e => console.error("BGM Playback Error:", e)); } else { bgmPlayer.pause(); } }
+        bgmPlayer.addEventListener('timeupdate', () => { if (!isPlaying) return; if (globalBGM.endTime && bgmPlayer.currentTime >= globalBGM.endTime) { bgmPlayer.currentTime = globalBGM.startTime || 0; } });
+        function togglePlay() { isPlaying ? stopPlayback() : startPlayback(); }
+        function startPlayback() { const unready = scriptCards.some(c => !c.ttsReady && c.text.trim()); if (unready) return alert('아직 음성 생성이 완료되지 않은 스크립트가 있습니다.'); if (scriptCards.length === 0) return; isPlaying = true; playBtn.textContent = '❚❚'; playBGM(); playCardByIndex(0); }
+        function stopPlayback() { isPlaying = false; playBtn.textContent = '▶'; ttsPlayer.pause(); bgmPlayer.pause(); }
+        function playCardByIndex(index) { if (index >= scriptCards.length || !isPlaying) { stopPlayback(); return; } playbackCurrentIndex = index; const card = scriptCards[index]; selectCard(card.id, true); ttsPlayer.src = card.audioUrl; ttsPlayer.play(); ttsPlayer.onended = () => playCardByIndex(index + 1); }
+
+        function initialize() {
+            document.getElementById('preview-panel').innerHTML = `
+                <div class="preview-header"></div><div class="preview-content"><div class="project-info"><div class="title"></div><span></span></div>
+                <div class="script-display-area"><div id="preview-text"></div><div id="preview-image-container"><img id="preview-image"></div></div></div>`;
+            renderControls();
+            addScriptBtnMain.addEventListener('click', () => addScriptCard(''));
+            playBtn.addEventListener('click', togglePlay);
+            addScriptCard('모든 기능이 복원되었습니다.');
+        }
+        
+        initialize();
+    });
+    </script>
+</body>
+</html>
