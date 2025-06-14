@@ -20,23 +20,7 @@
         
         /* CSS 스타일 */
         :root { --st-accent-color: #e82c43; --st-bg-color: #1e1e1e; --st-panel-color: #2a2a2a; --st-border-color: #383838; --st-text-color: #e0e0e0; --st-subtext-color: #aaa; }* { box-sizing: border-box; }body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--st-bg-color); color: var(--st-text-color); display: flex; height: 100vh; margin: 0; overflow: hidden; -webkit-font-smoothing: antialiased; }.st-panel { height: 100vh; display: flex; flex-direction: column; }.st-sidebar { width: 200px; background-color: var(--st-panel-color); padding: 20px; border-right: 1px solid var(--st-border-color); }.st-main-container { flex-grow: 1; display: flex; flex-direction: column; }.st-top-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: var(--st-panel-color); border-bottom: 1px solid var(--st-border-color); flex-shrink: 0; height: 50px;}.st-logo { font-family: 'GmarketSans', sans-serif; font-weight: bold; }.st-main-content { display: flex; flex-grow: 1; overflow: hidden; }.st-preview-area { flex-basis: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }.st-editor-area { flex-grow: 1; border-left: 1px solid var(--st-border-color); border-right: 1px solid var(--st-border-color); overflow-y: auto; padding: 20px; }.st-settings-area { flex-basis: 280px; overflow-y: auto; padding: 20px; background-color: var(--st-panel-color); }button { background-color: var(--st-accent-color); color: #fff; font-weight: bold; cursor: pointer; border: none; border-radius: 4px; padding: 8px 12px; }.st-preview-panel { width: 100%; max-width: 380px; aspect-ratio: 9 / 16; background-color: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; }
-        
-        /* ✨ FIX: 헤더 높이를 65px로 수정 */
-        .st-preview-header { 
-            font-family: 'GmarketSans', sans-serif;
-            color: white;
-            font-weight: bold;
-            flex-shrink: 0;
-            height: 65px; /* 고정된 높이 설정 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 15px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-        
+        .st-preview-header { font-family: 'GmarketSans', sans-serif; color: white; font-weight: bold; flex-shrink: 0; height: 65px; display: flex; justify-content: center; align-items: center; padding: 0 15px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
         .st-preview-content { padding: 10px; color: black; flex-grow: 1; display: flex; flex-direction: column; background-color: white; overflow: hidden; }.st-project-info { font-size: 13px; color: #555; margin: 0 0 16px 0; border-bottom: 1px solid #eee; padding-bottom: 16px; }.st-project-info .title { font-size: 22px; color: black; font-weight: bold; margin-bottom: 5px; }.st-script-display { flex-grow: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }#st-preview-text { width: 100%; font-size: 24px; color: #000; white-space: pre-wrap; margin-bottom: 8px; flex-shrink: 0; }#st-preview-image-container { width: 100%; display: flex; justify-content: center; align-items: flex-start; }#st-preview-image { max-width: 100%; max-height: 100%; object-fit: contain; }.st-timeline-controls { width: 100%; max-width: 380px; display: flex; align-items: center; gap: 10px; margin-top: 15px;}.st-play-all-btn { background: none; font-size: 24px; padding: 0;}#st-timeline-slider { flex-grow: 1; }.st-editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }.st-editor-header h3 { margin: 0; }.st-editor-header .button-group { display: flex; gap: 8px; }.st-card { background-color: var(--st-panel-color); border: 2px solid transparent; padding: 15px; margin-top: 15px; border-radius: 4px; cursor: pointer; position: relative; }.st-card.active { border-color: var(--st-accent-color); }.st-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .st-card-drag-handle { cursor: grab; }
         .st-card-drag-handle:active { cursor: grabbing; }
@@ -107,6 +91,7 @@
     </div>
     <audio id="st-tts-player" style="display:none;"></audio>
     <audio id="st-bgm-player" style="display:none;" loop></audio>
+    <audio id="st-sfx-player" style="display:none;"></audio>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.4.0/wavesurfer.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.4.0/plugin/wavesurfer.regions.min.js"></script>
@@ -137,14 +122,84 @@
 
         const BGM_LIST = [
             { name: '선택 안함', url: '' },
-            { name: 'big-cafe', url: 'https://thisisssullmaker.netlify.app/big-cafe.mp3' },
-            { name: 'blue-jacket', url: 'https://thisisssullmaker.netlify.app/blue-jacket.mp3' },
-            { name: 'cute-puppy', url: 'https://thisisssullmaker.netlify.app/cute-puppy.mp3' },
-            { name: 'laughter-in-the-breeze', url: 'https://thisisssullmaker.netlify.app/laughter-in-the-breeze-_happy_.mp3' },
-            { name: 'murder-in-my-mind', url: 'https://thisisssullmaker.netlify.app/murder-in-my-mind.mp3' },
-            { name: 'smiley-composure', url: 'https://thisisssullmaker.netlify.app/smiley-composure.mp3' },
-            { name: 'spider', url: 'https://thisisssullmaker.netlify.app/spider.mp3' },
-            { name: 'white-color', url: 'https://thisisssullmaker.netlify.app/white-color.mp3' }
+            { name: 'big-cafe', url: 'https://thisisssullmaker.netlify.app/sfx/Big-Cafe.mp3' },
+            { name: 'blue-jacket', url: 'https://thisisssullmaker.netlify.app/sfx/Blue-Jacket.mp3' },
+            { name: 'cute-puppy', url: 'https://thisisssullmaker.netlify.app/sfx/Cute-Puppy.mp3' },
+            { name: 'laughter-in-the-breeze', url: 'https://thisisssullmaker.netlify.app/sfx/Laughter-In-The-Breeze-_Happy....mp3' },
+            { name: 'murder-in-my-mind', url: 'https://thisisssullmaker.netlify.app/sfx/Murder-In-My-Mind.mp3' },
+            { name: 'smiley-composure', url: 'https://thisisssullmaker.netlify.app/sfx/smiley-composure.mp3' },
+            { name: 'spider', url: 'https://thisisssullmaker.netlify.app/sfx/Spider.mp3' },
+            { name: 'white-color', url: 'https://thisisssullmaker.netlify.app/sfx/White-Color.mp3' }
+        ];
+
+        // ✨ FIX: 모든 효과음 목록을 완벽하게 반영!
+        const SFX_LIST = [
+            { name: '효과음 없음', url: '' },
+            { name: '뾱 (물방울)', url: 'https://thisisssullmaker.netlify.app/sfx/062_뾱 (물방울).mp3' },
+            { name: '찰칵 (카메라)', url: 'https://thisisssullmaker.netlify.app/sfx/078_찰칵 (카메라).mp3' },
+            { name: '기어 1', url: 'https://thisisssullmaker.netlify.app/sfx/gears 1.wav' },
+            { name: '게임클리어 (고음)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_게임클리어 (고음).mp3' },
+            { name: '긍정적 마법 사용', url: 'https://thisisssullmaker.netlify.app/sfx/mp_긍정적 마법 사용.mp3' },
+            { name: '깨달음(뾰봉)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_깨달음을 얻었을 때(뾰봉).mp3' },
+            { name: '놀람 반전', url: 'https://thisisssullmaker.netlify.app/sfx/mp_놀람 반전.mp3' },
+            { name: '다음 장면전환(뾰로롱)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_다음 장면전환(뾰로롱).mp3' },
+            { name: '넘어가는 맑은 소리(띠링~)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_다음으로 넘어가는 맑은 소리(띠링~).mp3' },
+            { name: '동전먹는소리 2연속(중음)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_동전먹는소리 2연속(중음).mp3' },
+            { name: '딩동댕동 (전자음)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_딩동댕동 (전자음).mp3' },
+            { name: '문자 전송음(또로롱)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_문자 전송음(또로롱).mp3' },
+            { name: '복싱 타이머(땡땡땡)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_복싱 훈련 타이머가 울리는 소리 (땡땡땡).mp3' },
+            { name: '비디오 빨리감기 예능음', url: 'https://thisisssullmaker.netlify.app/sfx/mp_비디오 테이프 빨리감기 예능음.mp3' },
+            { name: '뾰로롱', url: 'https://thisisssullmaker.netlify.app/sfx/mp_뾰로롱.mp3' },
+            { name: '휙 날카롭게 지나가는', url: 'https://thisisssullmaker.netlify.app/sfx/mp_휙 날카롭게 지나가는.mp3' },
+            { name: '시한폭탄 초시계 (timer)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_시한폭탄 초시계 (timer).mp3' },
+            { name: '알람 시간 종료 -2 (차분_ beep)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_알람 시간 종료 -2 (차분_ beep).mp3' },
+            { name: '엘리베이터 도착음2 (띵동)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_엘리베이터 도착음2 (띵동).mp3' },
+            { name: '욕 가리는 삐처리', url: 'https://thisisssullmaker.netlify.app/sfx/mp_욕 가리는 삐처리.mp3' },
+            { name: '작은 카메라 찰칵 소리', url: 'https://thisisssullmaker.netlify.app/sfx/mp_작은 카메라 찰칵 소리.mp3' },
+            { name: '저녁숲 (개구리, 곤충)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_저녁숲 (개구리와 곤충울음소리).mp3' },
+            { name: '플래래 걸어가는 소리(뽀복)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_플래래 걸어가는 소리(뽀복).mp3' },
+            { name: '천사의 강림', url: 'https://thisisssullmaker.netlify.app/sfx/mp_천사의 강림.mp3' },
+            { name: '개서 (철컥쿵)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_개서 (철컥쿵).mp3' },
+            { name: '컴퓨터 키보드 타자', url: 'https://thisisssullmaker.netlify.app/sfx/mp_컴퓨터 키보드 타자.mp3' },
+            { name: '타이머 (째깍째깍)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_타이머 재는 시계음(째깍째깍).mp3' },
+            { name: '황당할 때 (띠요옹)', url: 'https://thisisssullmaker.netlify.app/sfx/mp_황당할 때 효과음 (띠요옹).mp3' },
+            { name: 'Riser 1', url: 'https://thisisssullmaker.netlify.app/sfx/riser 1.wav' },
+            { name: 'Whoosh 1', url: 'https://thisisssullmaker.netlify.app/sfx/whoosh1.mp3' },
+            { name: 'Whoosh 2', url: 'https://thisisssullmaker.netlify.app/sfx/whoosh2.mp3' },
+            { name: 'Whoosh 3', url: 'https://thisisssullmaker.netlify.app/sfx/whoosh3.wav' },
+            { name: 'Whoosh 4', url: 'https://thisisssullmaker.netlify.app/sfx/whoosh4.mp3' },
+            { name: '또로롱', url: 'https://thisisssullmaker.netlify.app/sfx/또로롱.wav' },
+            { name: '또아앙', url: 'https://thisisssullmaker.netlify.app/sfx/또아앙.wav' },
+            { name: '띠로록', url: 'https://thisisssullmaker.netlify.app/sfx/띠로록.mp3' },
+            { name: '띠롱(슈퍼마리오)', url: 'https://thisisssullmaker.netlify.app/sfx/띠롱_슈퍼마리오.mp3' },
+            { name: '띠리링', url: 'https://thisisssullmaker.netlify.app/sfx/띠리링.wav' },
+            { name: '띠링 1', url: 'https://thisisssullmaker.netlify.app/sfx/띠링1.wav' },
+            { name: '띠링 1초', url: 'https://thisisssullmaker.netlify.app/sfx/띠링1초.mp3' },
+            { name: '띠링 2', url: 'https://thisisssullmaker.netlify.app/sfx/띠링2.mp3' },
+            { name: '띠링 2초', url: 'https://thisisssullmaker.netlify.app/sfx/띠링2초.mp3' },
+            { name: '띠링 3', url: 'https://thisisssullmaker.netlify.app/sfx/띠링3.mp3' },
+            { name: '띠링 4', url: 'https://thisisssullmaker.netlify.app/sfx/띠링4.wav' },
+            { name: '띵', url: 'https://thisisssullmaker.netlify.app/sfx/띵.mp3' },
+            { name: '마우스클릭(딸깍)', url: 'https://thisisssullmaker.netlify.app/sfx/마우스클릭_딸깍.mp3' },
+            { name: '뾰옥 1', url: 'https://thisisssullmaker.netlify.app/sfx/뾰옥1.wav' },
+            { name: '뾰옥 2', url: 'https://thisisssullmaker.netlify.app/sfx/뾰옥2.mp3' },
+            { name: '뾰옥 3', url: 'https://thisisssullmaker.netlify.app/sfx/뾰옥3.wav' },
+            { name: '뽁 1초', url: 'https://thisisssullmaker.netlify.app/sfx/뽁1초.mp3' },
+            { name: '삐리삐빅', url: 'https://thisisssullmaker.netlify.app/sfx/삐리삐빅.mp3' },
+            { name: '삑', url: 'https://thisisssullmaker.netlify.app/sfx/삑.mp3' },
+            { name: '셔터', url: 'https://thisisssullmaker.netlify.app/sfx/셔터.wav' },
+            { name: '슉 1초', url: 'https://thisisssullmaker.netlify.app/sfx/슉1초.mp3' },
+            { name: '스윽', url: 'https://thisisssullmaker.netlify.app/sfx/스윽.mp3' },
+            { name: '예!', url: 'https://thisisssullmaker.netlify.app/sfx/예!.mp3' },
+            { name: '와우', url: 'https://thisisssullmaker.netlify.app/sfx/와우.wav' },
+            { name: '찰칵(소리)', url: 'https://thisisssullmaker.netlify.app/sfx/찰칵.wav' },
+            { name: '캐서', url: 'https://thisisssullmaker.netlify.app/sfx/캐서.mp3' },
+            { name: '키보드타이핑', url: 'https://thisisssullmaker.netlify.app/sfx/키보드타이핑.mp3' },
+            { name: '툽', url: 'https://thisisssullmaker.netlify.app/sfx/툽.mp3' },
+            { name: '폭발 1', url: 'https://thisisssullmaker.netlify.app/sfx/폭발1.mp3' },
+            { name: '폭발 2', url: 'https://thisisssullmaker.netlify.app/sfx/폭발2.mp3' },
+            { name: '폭발(큰)', url: 'https://thisisssullmaker.netlify.app/sfx/폭발_큰.mp3' },
+            { name: '후욱', url: 'https://thisisssullmaker.netlify.app/sfx/후욱.mp3' }
         ];
     
         let globalBGM = { url: null, volume: 0.3, startTime: 0, endTime: null };
@@ -159,6 +214,7 @@
         const timelineSlider = document.getElementById('st-timeline-slider');
         const ttsPlayer = document.getElementById('st-tts-player');
         const bgmPlayer = document.getElementById('st-bgm-player');
+        const sfxPlayer = document.getElementById('st-sfx-player'); 
         const settingsPanel = document.getElementById('st-settings-panel');
         const addCardBtn = document.getElementById('st-btn-add-card');
 
@@ -293,7 +349,6 @@
                         <div><label>배경 색상</label><input type="color" id="st-setting-header-bg" value="#e82c43"></div>
                         <div><label>글자 색상</label><input type="color" id="st-setting-header-color" value="#FFFFFF"></div>
                     </div>
-                    <!-- ✨ FIX: 헤더 글자 크기 조절 기능 추가 -->
                     <div class="st-flex-group">
                          <div><label>폰트</label><select id="st-setting-header-font">${fontOptions}</select></div>
                          <div><label>크기</label><input type="number" id="st-setting-header-size" value="24"></div>
@@ -316,12 +371,22 @@
 
         function addScriptCard(text = '') {
             const cardId = `card-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
-            const cardData = { id: cardId, text, duration: 0.5, imageUrl: null, style: {}, audioUrl: null, ttsReady: false };
+            const cardData = { id: cardId, text, duration: 0.5, imageUrl: null, style: {}, audioUrl: null, ttsReady: false, sfxUrl: null };
             scriptCards.push(cardData);
             const cardEl = document.createElement('div');
             cardEl.className = 'st-card';
             cardEl.dataset.id = cardId;
-            cardEl.innerHTML = `<div class="st-card-header st-card-drag-handle"><span class="st-card-number"></span><button class="st-btn-delete-card">🗑️</button></div><textarea placeholder="스크립트를 입력하세요...">${text}</textarea><div class="st-card-footer"><button class="st-play-clip-btn" title="미리듣기" disabled>▶️</button><span class="st-duration-label">타임라인 (---초)</span><label class="st-action-btn" for="${cardId}-file">이미지</label><input type="file" id="${cardId}-file" accept="image/*"></div>`;
+            
+            const sfxOptions = SFX_LIST.map(sfx => `<option value="${sfx.url || ''}">${sfx.name}</option>`).join('');
+            cardEl.innerHTML = `<div class="st-card-header st-card-drag-handle"><span class="st-card-number"></span><button class="st-btn-delete-card">🗑️</button></div>
+                              <textarea placeholder="스크립트를 입력하세요...">${text}</textarea>
+                              <div class="st-card-footer">
+                                <button class="st-play-clip-btn" title="미리듣기" disabled>▶️</button>
+                                <span class="st-duration-label">타임라인 (---초)</span>
+                                <label class="st-action-btn" for="${cardId}-file">이미지</label>
+                                <input type="file" id="${cardId}-file" accept="image/*">
+                                <select class="st-sfx-select" style="width: auto; margin-left: auto;">${sfxOptions}</select>
+                              </div>`;
             cardContainer.appendChild(cardEl);
             
             cardEl.querySelector('.st-play-clip-btn').addEventListener('click', (e) => {
@@ -331,6 +396,10 @@
                     ttsPlayer.src = cardData.audioUrl;
                     ttsPlayer.play();
                 }
+            });
+
+            cardEl.querySelector('.st-sfx-select').addEventListener('change', (e) => {
+                cardData.sfxUrl = e.target.value || null;
             });
 
             const debouncedFetchAndUpdate = debounce(async (newText, id) => {
@@ -415,7 +484,6 @@
                 headerEl.style.backgroundColor = document.getElementById('st-setting-header-bg')?.value || '#e82c43';
                 headerEl.style.color = document.getElementById('st-setting-header-color')?.value || '#ffffff';
                 headerEl.style.fontFamily = document.getElementById('st-setting-header-font')?.value || 'GmarketSans';
-                // ✨ FIX: 헤더 글자 크기 조절 기능 적용
                 headerEl.style.fontSize = (document.getElementById('st-setting-header-size')?.value || '24') + 'px';
             }
             const titleEl = document.querySelector('.st-project-info .title');
@@ -501,6 +569,7 @@
             playAllBtn.textContent = '▶';
             ttsPlayer.pause();
             bgmPlayer.pause();
+            sfxPlayer.pause();
         }
 
         function playCardByIndex(index) {
@@ -511,6 +580,12 @@
             playbackCurrentIndex = index;
             const card = scriptCards[index];
             selectCard(card.id, true);
+
+            if (card.sfxUrl) {
+                sfxPlayer.src = card.sfxUrl;
+                sfxPlayer.play();
+            }
+
             ttsPlayer.src = card.audioUrl;
             ttsPlayer.play();
             ttsPlayer.onended = () => playCardByIndex(index + 1);
@@ -521,7 +596,7 @@
                 <div class="st-preview-header"></div><div class="st-preview-content"><div class="st-project-info"><div class="title"></div><span></span></div>
                 <div class="st-script-display"><div id="st-preview-text"></div><div id="st-preview-image-container"><img id="st-preview-image"></div></div></div>`;
             renderControls();
-            updatePreviewDisplay(); // 초기 렌더링
+            updatePreviewDisplay(); 
             addCardBtn.addEventListener('click', () => addScriptCard(''));
             playAllBtn.addEventListener('click', togglePlay);
 
