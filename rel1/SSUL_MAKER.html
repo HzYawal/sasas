@@ -83,17 +83,17 @@
             ACTOR_ID: '6596849ea3ecaa12a8b13989'
         };
         
-        // ✨ FIX: 확인된 정확한 URL로 최종 수정
+        // ✨ FIX: 최종 GitHub 연동 Netlify URL로 모두 수정
         const BGM_LIST = [
             { name: '선택 안함', url: '' },
-            { name: 'big-cafe', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/big-cafe.mp3' },
-            { name: 'blue-jacket', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/blue-jacket.mp3' },
-            { name: 'cute-puppy', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/cute-puppy.mp3' },
-            { name: 'laughter-in-the-breeze', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/laughter-in-the-breeze-_happy_.mp3' },
-            { name: 'murder-in-my-mind', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/murder-in-my-mind.mp3' },
-            { name: 'smiley-composure', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/smiley-composure.mp3' },
-            { name: 'spider', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/spider.mp3' },
-            { name: 'white-color', url: 'https://stupendous-valkyrie-34e3bb.netlify.app/white-color.mp3' }
+            { name: 'big-cafe', url: 'https://thisisssullmaker.netlify.app/big-cafe.mp3' },
+            { name: 'blue-jacket', url: 'https://thisisssullmaker.netlify.app/blue-jacket.mp3' },
+            { name: 'cute-puppy', url: 'https://thisisssullmaker.netlify.app/cute-puppy.mp3' },
+            { name: 'laughter-in-the-breeze', url: 'https://thisisssullmaker.netlify.app/laughter-in-the-breeze-_happy_.mp3' },
+            { name: 'murder-in-my-mind', url: 'https://thisisssullmaker.netlify.app/murder-in-my-mind.mp3' },
+            { name: 'smiley-composure', url: 'https://thisisssullmaker.netlify.app/smiley-composure.mp3' },
+            { name: 'spider', url: 'https://thisisssullmaker.netlify.app/spider.mp3' },
+            { name: 'white-color', url: 'https://thisisssullmaker.netlify.app/white-color.mp3' }
         ];
     
         let globalBGM = { url: null, volume: 0.3, startTime: 0, endTime: null };
@@ -128,7 +128,7 @@
 
             wavesurfer.on('error', (err) => {
                 console.error('WaveSurfer Error:', err);
-                alert('BGM 파일을 불러오는 데 실패했습니다. 파일 URL을 확인해주세요.');
+                alert('BGM 파일을 불러오는 데 실패했습니다. 파일 URL과 서버의 CORS 설정을 확인해주세요.');
                 closeBgmEditor();
             });
 
