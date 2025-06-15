@@ -120,7 +120,7 @@
             { name: '독도 (거친 붓글씨)', value: "'Dokdo', cursive" },
         ];
 
-        // ✨ FIX: BGM 파일의 잘못된 경로(sfx/)를 모두 수정
+        // ✨ FIX: BGM 파일의 경로에서 잘못 추가된 'sfx/'를 모두 제거
         const BGM_LIST = [
             { name: '선택 안함', url: '' },
             { name: 'big-cafe', url: 'https://thisisssullmaker.netlify.app/Big-Cafe.mp3' },
@@ -605,18 +605,17 @@
             const card = scriptCards[index];
             selectCard(card.id, true);
 
-            // ✨ FIX: 타이밍 최적화! 효과음 먼저, 아주 약간 뒤에 목소리 재생
             if (card.sfxUrl) {
                 sfxPlayer.src = card.sfxUrl;
                 sfxPlayer.play();
             }
             
             setTimeout(() => {
-                if (isPlaying && playbackCurrentIndex === index) { // 딜레이 중에 정지 버튼을 누를 경우를 대비
+                if (isPlaying && playbackCurrentIndex === index) {
                     ttsPlayer.src = card.audioUrl;
                     ttsPlayer.play();
                 }
-            }, 30); // 0.03초의 미세한 딜레이
+            }, 30);
             
             ttsPlayer.onended = () => playCardByIndex(index + 1);
         }
