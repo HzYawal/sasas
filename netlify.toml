@@ -1,0 +1,5 @@
+# 수정된 netlify.toml 내용
+[build]
+  command = "echo 'No build step required'"
+  publish = "."  # publish 경로를 'rel1/' 에서 '.' 으로 수정
+  lfs_enabled = true
