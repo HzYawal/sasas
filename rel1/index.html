@@ -60,6 +60,7 @@
             <div class="st-panel st-settings-area" id="st-settings-panel"></div>
         </div>
     </div>
+    <!-- ✨ GPTS 모달 HTML 구조 복원 -->
     <div id="st-modal-gpts" class="st-modal-overlay">
         <div class="st-modal-dialog">
             <h2>GPTs 스크립트 추가</h2>
@@ -216,6 +217,13 @@
         const sfxPlayer = document.getElementById('st-sfx-player'); 
         const settingsPanel = document.getElementById('st-settings-panel');
         const addCardBtn = document.getElementById('st-btn-add-card');
+        
+        // ✨ GPTS 모달 요소 가져오기
+        const addGptsBtn = document.getElementById('st-btn-add-gpts');
+        const gptsModal = document.getElementById('st-modal-gpts');
+        const gptsCancelBtn = document.getElementById('st-btn-gpts-cancel');
+        const gptsConfirmBtn = document.getElementById('st-btn-gpts-confirm');
+        const gptsTextarea = document.getElementById('st-gpts-textarea');
 
         let wavesurfer = null;
         let activeRegion = null;
@@ -388,7 +396,7 @@
                               </div>`;
             cardContainer.appendChild(cardEl);
             
-            // ✨ FIX: 누락되었던 이미지 추가 기능 로직 복원
+            // ✨ FIX: 이미지 추가 기능 로직 복원
             const fileInput = cardEl.querySelector(`#${cardId}-file`);
             fileInput.addEventListener('change', (e) => {
                 if (e.target.files && e.target.files[0]) {
@@ -516,7 +524,6 @@
             if (!previewText || !previewImage) return;
             previewText.textContent = card ? card.text : '스크립트를 추가하거나 선택하세요.';
             
-            // ✨ FIX: 이미지 표시 로직 복원
             if (card && card.imageUrl) {
                 previewImage.src = card.imageUrl;
                 previewImage.style.display = 'block';
@@ -609,6 +616,42 @@
             ttsPlayer.play();
             ttsPlayer.onended = () => playCardByIndex(index + 1);
         }
+        
+        // ✨ GPTS 모달 기능 로직 복원
+        function setupGptsModal() {
+            addGptsBtn.addEventListener('click', () => {
+                gptsModal.classList.add('visible');
+            });
+
+            function closeModal() {
+                gptsModal.classList.remove('visible');
+                gptsTextarea.value = '';
+            }
+
+            gptsCancelBtn.addEventListener('click', closeModal);
+            gptsModal.addEventListener('click', (e) => {
+                if (e.target === gptsModal) {
+                    closeModal();
+                }
+            });
+
+            gptsConfirmBtn.addEventListener('click', () => {
+                const text = gptsTextarea.value.trim();
+                if (!text) return;
+
+                const lines = text.split(/\n\s*\n/).filter(line => line.trim() !== '');
+                lines.forEach(line => {
+                    addScriptCard(line.trim());
+                });
+
+                closeModal();
+                
+                if(lines.length > 0 && scriptCards.length > 0) {
+                     const firstNewCardId = scriptCards[scriptCards.length - lines.length].id;
+                     selectCard(firstNewCardId);
+                }
+            });
+        }
 
         function initialize() {
             document.getElementById('st-preview-panel').innerHTML = `
@@ -618,6 +661,8 @@
             updatePreviewDisplay(); 
             addCardBtn.addEventListener('click', () => addScriptCard(''));
             playAllBtn.addEventListener('click', togglePlay);
+            
+            setupGptsModal(); // ✨ GPTS 모달 기능 활성화
 
             document.getElementById('st-setting-global-bgm').addEventListener('change', (e) => {
                 const url = e.target.value;
