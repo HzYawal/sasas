@@ -132,7 +132,6 @@
             { name: 'white-color', url: 'https://thisisssullmaker.netlify.app/sfx/White-Color.mp3' }
         ];
         
-        // ✨ FIX: 뾱(물방울) 소리 인코딩 문제 해결 및 전체 목록 반영
         const SFX_LIST = [
             { name: '효과음 없음', url: '' },
             { name: '뾱 (물방울)', url: `https://thisisssullmaker.netlify.app/sfx/062_${encodeURIComponent('뾱 (물방울)')}.mp3` },
@@ -605,17 +604,14 @@
             const card = scriptCards[index];
             selectCard(card.id, true);
 
-            // ✨ FIX: 효과음 재생 로직을 TTS 재생보다 앞으로 이동
+            // ✨ FIX: 효과음과 TTS를 동시에 재생 시작하여 타이밍 최적화
             if (card.sfxUrl) {
                 sfxPlayer.src = card.sfxUrl;
                 sfxPlayer.play();
             }
-
+            
             ttsPlayer.src = card.audioUrl;
-            // 효과음이 먼저 재생될 아주 약간의 시간을 줌 (선택사항)
-            setTimeout(() => {
-                if (isPlaying) ttsPlayer.play();
-            }, 50); 
+            ttsPlayer.play(); // 지연 없이 바로 재생
             
             ttsPlayer.onended = () => playCardByIndex(index + 1);
         }
