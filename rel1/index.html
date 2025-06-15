@@ -120,16 +120,17 @@
             { name: '독도 (거친 붓글씨)', value: "'Dokdo', cursive" },
         ];
 
+        // ✨ FIX: BGM 파일의 잘못된 경로(sfx/)를 모두 수정
         const BGM_LIST = [
             { name: '선택 안함', url: '' },
-            { name: 'big-cafe', url: 'https://thisisssullmaker.netlify.app/sfx/Big-Cafe.mp3' },
-            { name: 'blue-jacket', url: 'https://thisisssullmaker.netlify.app/sfx/Blue-Jacket.mp3' },
-            { name: 'cute-puppy', url: 'https://thisisssullmaker.netlify.app/sfx/Cute-Puppy.mp3' },
-            { name: 'laughter-in-the-breeze', url: 'https://thisisssullmaker.netlify.app/sfx/Laughter-In-The-Breeze-_Happy....mp3' },
-            { name: 'murder-in-my-mind', url: 'https://thisisssullmaker.netlify.app/sfx/Murder-In-My-Mind.mp3' },
-            { name: 'smiley-composure', url: 'https://thisisssullmaker.netlify.app/sfx/smiley-composure.mp3' },
-            { name: 'spider', url: 'https://thisisssullmaker.netlify.app/sfx/Spider.mp3' },
-            { name: 'white-color', url: 'https://thisisssullmaker.netlify.app/sfx/White-Color.mp3' }
+            { name: 'big-cafe', url: 'https://thisisssullmaker.netlify.app/Big-Cafe.mp3' },
+            { name: 'blue-jacket', url: 'https://thisisssullmaker.netlify.app/Blue-Jacket.mp3' },
+            { name: 'cute-puppy', url: 'https://thisisssullmaker.netlify.app/Cute-Puppy.mp3' },
+            { name: 'laughter-in-the-breeze', url: 'https://thisisssullmaker.netlify.app/Laughter-In-The-Breeze-_Happy....mp3' },
+            { name: 'murder-in-my-mind', url: 'https://thisisssullmaker.netlify.app/Murder-In-My-Mind.mp3' },
+            { name: 'smiley-composure', url: 'https://thisisssullmaker.netlify.app/smiley-composure.mp3' },
+            { name: 'spider', url: 'https://thisisssullmaker.netlify.app/Spider.mp3' },
+            { name: 'white-color', url: 'https://thisisssullmaker.netlify.app/White-Color.mp3' }
         ];
         
         const SFX_LIST = [
@@ -603,21 +604,19 @@
             playbackCurrentIndex = index;
             const card = scriptCards[index];
             selectCard(card.id, true);
-            
-            // ✨ FIX: 효과음이 먼저 재생되도록 순서 변경 및 미세 딜레이 적용
+
+            // ✨ FIX: 타이밍 최적화! 효과음 먼저, 아주 약간 뒤에 목소리 재생
             if (card.sfxUrl) {
                 sfxPlayer.src = card.sfxUrl;
                 sfxPlayer.play();
             }
             
-            ttsPlayer.src = card.audioUrl;
-            // 효과음이 먼저 시작될 아주 약간의 시간을 벌어줌 (30ms = 0.03초)
             setTimeout(() => {
-                // 딜레이 중에 사용자가 정지 버튼을 누를 경우를 대비한 안전장치
-                if (isPlaying && playbackCurrentIndex === index) {
+                if (isPlaying && playbackCurrentIndex === index) { // 딜레이 중에 정지 버튼을 누를 경우를 대비
+                    ttsPlayer.src = card.audioUrl;
                     ttsPlayer.play();
                 }
-            }, 30);
+            }, 30); // 0.03초의 미세한 딜레이
             
             ttsPlayer.onended = () => playCardByIndex(index + 1);
         }
