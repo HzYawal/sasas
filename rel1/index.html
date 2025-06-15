@@ -603,15 +603,21 @@
             playbackCurrentIndex = index;
             const card = scriptCards[index];
             selectCard(card.id, true);
-
-            // ✨ FIX: 효과음과 TTS를 동시에 재생 시작하여 타이밍 최적화
+            
+            // ✨ FIX: 효과음이 먼저 재생되도록 순서 변경 및 미세 딜레이 적용
             if (card.sfxUrl) {
                 sfxPlayer.src = card.sfxUrl;
                 sfxPlayer.play();
             }
             
             ttsPlayer.src = card.audioUrl;
-            ttsPlayer.play(); // 지연 없이 바로 재생
+            // 효과음이 먼저 시작될 아주 약간의 시간을 벌어줌 (30ms = 0.03초)
+            setTimeout(() => {
+                // 딜레이 중에 사용자가 정지 버튼을 누를 경우를 대비한 안전장치
+                if (isPlaying && playbackCurrentIndex === index) {
+                    ttsPlayer.play();
+                }
+            }, 30);
             
             ttsPlayer.onended = () => playCardByIndex(index + 1);
         }
