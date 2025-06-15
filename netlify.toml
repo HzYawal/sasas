@@ -1,4 +1,5 @@
+# 수정된 netlify.toml 내용
 [build]
-  command = "echo 'No build step required'" # 빌드 명령이 없으므로 빈 명령 실행
-  publish = "rel1/"                       # 배포할 폴더 (스크린샷 설정과 동일)
-  lfs_enabled = true                      # Git LFS 활성화 (가장 중요한 부분)
+  command = "echo 'No build step required'"
+  publish = "."  # publish 경로를 'rel1/' 에서 '.' 으로 수정
+  lfs_enabled = true
